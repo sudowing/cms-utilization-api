@@ -6,8 +6,8 @@ import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
 import { router as appRouter } from "./modules/app/index";
 
-import { RootModule } from "./schema";
 import { logger } from "./loggers";
+import { RootModule } from "./schema";
 
 const port = config.get("port");
 const urlRoot = config.get("urlRoot");
