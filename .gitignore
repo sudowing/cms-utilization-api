@@ -1,0 +1,46 @@
+# vols
+volumes/db
+volumes/elastic
+volumes/elastic_exports
+volumes/elastic_exports.tar*
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# generated JS
+lib
+
+# lock file
+package-lock.json
+
+.DS_Store
+
+.npmrc
+config/local*

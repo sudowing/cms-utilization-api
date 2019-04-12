@@ -1,0 +1,7 @@
+.git
+.gitignore
+.vscode
+volumes/db
+volumes/elastic
+volumes/elastic_exports
+node_modules
