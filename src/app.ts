@@ -10,8 +10,8 @@ import { logger } from "./loggers";
 import { RootModule } from "./schema";
 
 const port = config.get("port");
-const urlRoot = config.get("urlRoot");
-const debug: boolean = config.get("debug");
+const urlRoot = config.get("urlRoot") || '/graphql';
+const debug: boolean = config.get("debug") || false;
 
 appRouter.prefix(`${urlRoot}`);
 
