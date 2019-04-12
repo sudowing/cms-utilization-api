@@ -24,5 +24,5 @@ const typeDefs = gql`
 
 export const AppModule = new GraphQLModule({
   typeDefs,
-  resolvers,
+  resolvers
 });
