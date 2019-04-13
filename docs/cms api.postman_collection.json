@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "d650b326-8cc0-4de9-9ac4-d5579b50e4b4",
+		"name": "cms api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "db ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "providers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/providers?npi=1679883219",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"providers"
+					],
+					"query": [
+						{
+							"key": "npi",
+							"value": "1679883219"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "providers_individuals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/providers_individuals?npi=1679883219",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"providers_individuals"
+					],
+					"query": [
+						{
+							"key": "npi",
+							"value": "1679883219"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "providers_organizations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/providers_organizations?npi=1689608390",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"providers_organizations"
+					],
+					"query": [
+						{
+							"key": "npi",
+							"value": "1689608390"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "services",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/services?hcpcs=11750",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"services"
+					],
+					"query": [
+						{
+							"key": "hcpcs",
+							"value": "11750"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "provider_performance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/provider_performance?",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"provider_performance"
+					],
+					"query": [
+						{
+							"key": "npi",
+							"value": "1093797532",
+							"disabled": true
+						},
+						{
+							"key": "hcpcs",
+							"value": "11750",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service_performance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/service_performance?hcpcs=00120",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"service_performance"
+					],
+					"query": [
+						{
+							"key": "hcpcs",
+							"value": "00120"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service_provider_performance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/service_provider_performance?hcpcs=00103&npi=1003082041",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"service_provider_performance"
+					],
+					"query": [
+						{
+							"key": "hcpcs",
+							"value": "00103"
+						},
+						{
+							"key": "npi",
+							"value": "1003082041"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service_provider_performance_summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/service_provider_performance_summary?npi=1003082041",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"service_provider_performance_summary"
+					],
+					"query": [
+						{
+							"key": "npi",
+							"value": "1003082041"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service_provider_performance_summary_type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8088/db/service_provider_performance_summary_type?",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"db",
+						"service_provider_performance_summary_type"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
