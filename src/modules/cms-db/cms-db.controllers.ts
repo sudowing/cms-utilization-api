@@ -10,8 +10,12 @@ const ping = (ctx: Context) => {
 };
 
 const provider_performance = async (ctx: Context) => {
-  const { npi } = ctx.query || null;
-  const results = await qry.provider_performance(npi);
+  const { hcpcs, npi } = ctx.query;
+  const where: any = {};
+  if ( hcpcs ) { where.hcpcs_code = hcpcs; }
+  if ( npi ) { where.npi = npi; }
+
+  const results = await qry.provider_performance(where);
   ctx.response.body = results;
 };
 
@@ -39,53 +43,34 @@ const service_performance = async (ctx: Context) => {
   ctx.response.body = results;
 };
 
-const service_provider_performance = async (ctx: Context) => {
-  const { hcpcs, npi } = ctx.query || null;
-  const where = {
-    hcpcs_code: hcpcs || null,
-    npi: npi || null,
-  };
-
-  console.log("where: ", where)
+const whereServiceProvider = (ctx: Context) => {
+  const { hcpcs, npi } = ctx.query;
+  const where: any = {};
+  if ( hcpcs ) { where.hcpcs_code = hcpcs; }
+  if ( npi ) { where.npi = npi; }
 
   if (!where.hcpcs_code && !where.npi) {
     ctx.status = statusCodes.BAD_REQUEST;
     ctx.response.body = {message: "must send hcpcs or npi"};
   }
+  return where;
+}
 
+const service_provider_performance = async (ctx: Context) => {
+  const where = whereServiceProvider(ctx);
   const results = await qry.service_provider_performance(where);
   ctx.response.body = results;
 };
 
 const service_provider_performance_summary = async (ctx: Context) => {
-  const { hcpcs, npi } = ctx.query || null;
-  const where = {
-    hcpcs_code: hcpcs || null,
-    npi: npi || null,
-  };
-
-  if (!where.hcpcs_code && !where.npi) {
-    ctx.status = statusCodes.BAD_REQUEST;
-    ctx.response.body = {message: "must send hcpcs or npi"};
-  }
-
-  const results = await qry.service_provider_performance_summary(where);
+  const { npi } = ctx.query || null;
+  const results = await qry.service_provider_performance_summary(npi);
   ctx.response.body = results;
 };
 
 const service_provider_performance_summary_type = async (ctx: Context) => {
-  const { hcpcs, npi } = ctx.query || null;
-  const where = {
-    hcpcs_code: hcpcs || null,
-    npi: npi || null,
-  };
-
-  if (!where.hcpcs_code && !where.npi) {
-    ctx.status = statusCodes.BAD_REQUEST;
-    ctx.response.body = {message: "must send hcpcs or npi"};
-  }
-
-  const results = await qry.service_provider_performance_summary_type(where);
+  const { id } = ctx.query || null;
+  const results = await qry.service_provider_performance_summary_type(id);
   ctx.response.body = results;
 };
 

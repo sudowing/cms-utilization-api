@@ -1,14 +1,6 @@
 
 import { db } from "../../network-sources";
 
-
-
-export const provider_performance = (npi: number) => {
-    return db.from("cms.provider_performance as table")
-        .where("table.npi", npi);
-}
-
-
 export const providers = (npi: number) => {
     return db.from("cms.providers as table")
         .where("table.npi", npi);
@@ -26,6 +18,16 @@ export const providers_organizations = (npi: number) => {
         .where("table.npi", npi);
 }
 
+export const services = (hcpcs: string) => {
+    return db.from("cms.services as table")
+        .where("table.hcpcs_code", hcpcs);
+}
+
+export const provider_performance = (where: object) => {
+    return db.from("cms.provider_performance as table")
+        .where(where);
+}
+
 
 export const service_performance = (hcpcs: string) => {
     return db.from("cms.service_performance as table")
@@ -34,26 +36,21 @@ export const service_performance = (hcpcs: string) => {
 
 
 export const service_provider_performance = (where: object) => {
-    const query = db.from("cms.service_provider_performance as table")
+    return db.from("cms.service_provider_performance as table")
         .where(where).select();
-    console.log('query', query.toString())
+}
+
+
+export const service_provider_performance_summary = (npi: number) => {
+    return db.from("cms.service_provider_performance_summary as table")
+        .where("table.npi", npi);
+}
+
+export const service_provider_performance_summary_type = (id: number) => {
+    const query = db.from("cms.service_provider_performance_summary_type as table");
+    if (id) {
+        query.where("table.id", id);
+    }
     return query
 }
 
-
-export const service_provider_performance_summary = (where: object) => {
-    return db.from("cms.service_provider_performance_summary as table")
-        .where(where);
-}
-
-
-export const service_provider_performance_summary_type = (where: object) => {
-    return db.from("cms.service_provider_performance_summary_type as table")
-        .where(where);
-}
-
-
-export const services = (hcpcs: string) => {
-    return db.from("cms.services as table")
-        .where("table.hcpcs_code", hcpcs);
-}
