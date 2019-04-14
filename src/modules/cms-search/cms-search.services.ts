@@ -1,24 +1,8 @@
-import { elasticsearch as es } from ../../network-sources;
+import { elasticsearch as es } from "../../network-sources";
+import * as ts from "./cms-search.interfaces";
 
-interface Payload1 {
-    must?: any[];
-    filter?: any;
-}
-
-interface Payload2 {
-    latitude: number;
-    longitude: number;
-    distanceUnit: string;
-    distanceValue: number;
-};
-
-interface Payload3 {
-    hcpcsCodes: string[];
-    allServices: boolean;
-};
-
-const genGeoProviderQuery = (geoOptions: Payload2, hcpcsOptions: Payload3, entityType: string = "") => {
-    const payload: Payload1 = {};
+const genGeoProviderQuery = (geoOptions: ts.Payload2, hcpcsOptions: ts.Payload3, entityType: string = "") => {
+    const payload: ts.Payload1 = {};
     payload.filter = {
         geo_distance: {
             distance: `${geoOptions.distanceValue}${geoOptions.distanceUnit}`,
@@ -42,21 +26,19 @@ const genGeoProviderQuery = (geoOptions: Payload2, hcpcsOptions: Payload3, entit
     return payload;
 };
 
-const geo: Payload2 = {
-    latitude: 39.8707347,
-    longitude: -74.8982277,
-    distanceUnit: "miles",
-    distanceValue: 3,
-};
-
-const hcpcs: Payload3 = {
-    hcpcsCodes: ["99203", "99213", "99204"],
-    allServices: false,
-}
-
-
-const oooo = {
-    query: {
-        bool : genGeoProviderQuery(geo, hcpcs),
-    },
+export const searchGeoProviders = async (
+    geoOptions: ts.Payload2,
+    hcpcsOptions: ts.Payload3,
+    entityType: string = "",
+) => {
+    const geoProviderQuery = {
+        query: {
+            bool : genGeoProviderQuery(geoOptions, hcpcsOptions, entityType),
+        },
+    };
+    const searchResults = await es.search({
+        index: "provider-performance",
+        body: geoProviderQuery,
+    });
+    return searchResults;
 };

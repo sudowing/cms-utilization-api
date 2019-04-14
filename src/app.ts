@@ -5,7 +5,8 @@ import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
 import { router as appRouter } from "./modules/app/index";
-import { router as DbRouter } from "./modules/cms-db/index";
+import { router as dbRouter } from "./modules/cms-db/index";
+import { router as searchRouter } from "./modules/cms-search/index";
 
 import { logger } from "./loggers";
 import { RootModule } from "./schema";
@@ -15,18 +16,20 @@ const urlRoot = config.get("urlRoot") || "/graphql";
 const debug: boolean = config.get("debug") || false;
 
 appRouter.prefix(``);
-DbRouter.prefix(`/db`);
-
+dbRouter.prefix(`/db`);
+searchRouter.prefix(`/search`);
 
 const App = new Koa();
 
 App.use(cors());
 
 App.use(bodyParser())
-.use(appRouter.routes())
-.use(appRouter.allowedMethods())
-.use(DbRouter.routes())
-.use(DbRouter.allowedMethods());
+  .use(appRouter.routes())
+  .use(appRouter.allowedMethods())
+  .use(dbRouter.routes())
+  .use(dbRouter.allowedMethods())
+  .use(searchRouter.routes())
+  .use(searchRouter.allowedMethods());
 
 App.use(compress());
 
