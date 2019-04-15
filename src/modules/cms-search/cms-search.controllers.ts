@@ -11,24 +11,32 @@ const ping = (ctx: Context) => {
 };
 
 const providerPerformance = async (ctx: Context) => {
-    // const { hcpcs, npi } = ctx.query;
-    // const where: any = {};
-    // if ( hcpcs ) { where.hcpcs_code = hcpcs; }
-    // if ( npi ) { where.npi = npi; }
+    const { geo, hcpcs, entityType } = ctx.request.body;
 
-    const geo: ts.Payload2 = {
-        latitude: 39.8707347,
-        longitude: -74.8982277,
-        distanceUnit: "miles",
-        distanceValue: 3,
+    if (
+        !geo.latitude ||
+        !geo.longitude ||
+        !geo.distanceValue
+    ) {
+        ctx.status = statusCodes.BAD_REQUEST;
+        ctx.response.body = {message: "must send geo.latitude, geo.longitude and geo.distanceValue"};
+    }
+
+    const geoOptions: ts.Payload2 = {
+        latitude: geo.latitude,
+        longitude: geo.longitude,
+        distanceUnit: geo.distanceUnit || "miles",
+        distanceValue: geo.distanceValue,
     };
 
-    const hcpcs: ts.Payload3 = {
-        hcpcsCodes: ["99203", "99213", "99204"],
-        allServices: false,
+    const hcpcsOptions: ts.Payload3 = {
+        hcpcsCodes: hcpcs.codes || [],
+        allServices: hcpcs.all || false,
     };
 
-    const results = await service.searchGeoProviders(geo, hcpcs);
+    const entityTypeOption = entityType || "";
+
+    const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption);
     ctx.response.body = results;
 };
 
