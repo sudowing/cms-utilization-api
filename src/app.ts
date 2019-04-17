@@ -7,6 +7,7 @@ import * as compress from "koa-compress";
 import { router as appRouter } from "./modules/app/index";
 import { router as dbRouter } from "./modules/cms-db/index";
 import { router as searchRouter } from "./modules/cms-search/index";
+import { router as npiRegistryRouter } from "./modules/npi-registry/index";
 
 import { logger } from "./loggers";
 import { RootModule } from "./schema";
@@ -18,6 +19,7 @@ const debug: boolean = config.get("debug") || false;
 appRouter.prefix(``);
 dbRouter.prefix(`/db`);
 searchRouter.prefix(`/search`);
+npiRegistryRouter.prefix(`/npi-registry`);
 
 const App = new Koa();
 
@@ -29,7 +31,9 @@ App.use(bodyParser())
   .use(dbRouter.routes())
   .use(dbRouter.allowedMethods())
   .use(searchRouter.routes())
-  .use(searchRouter.allowedMethods());
+  .use(searchRouter.allowedMethods())
+  .use(npiRegistryRouter.routes())
+  .use(npiRegistryRouter.allowedMethods());
 
 App.use(compress());
 
