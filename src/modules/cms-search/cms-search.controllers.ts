@@ -40,8 +40,29 @@ const providerPerformance = async (ctx: Context) => {
     ctx.response.body = results;
 };
 
+
+
+const autocompleteServices = async (ctx: Context) => {
+    const { qs } = ctx.query;
+    if (!qs) {
+        ctx.status = statusCodes.BAD_REQUEST;
+        ctx.response.body = {message: "must send qs"};
+    }
+
+    const results = await service.autocompleteServices(qs);
+    const records = results.hits.hits.map((record: any) => {
+        const { hcpcs_code, hcpcs_description} = record._source;
+        return { hcpcs_code, hcpcs_description };
+    });
+    ctx.response.body = records;
+};
+
+
 export const router = new Router<unknown>();
 
 router.get("/ping", ping);
 
 router.get("/provider_performance", providerPerformance);
+router.get("/auto_services", autocompleteServices);
+
+

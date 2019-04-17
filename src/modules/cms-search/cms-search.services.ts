@@ -42,3 +42,17 @@ export const searchGeoProviders = async (
     });
     return searchResults;
 };
+
+
+export const autocompleteServices = async (search: string = "") => {
+    const serviceAutocomplete = {
+        query: {
+            match : { hcpcs_description: search },
+        },
+    };
+    const searchResults = await es.search({
+        index: "services",
+        body: serviceAutocomplete,
+    });
+    return searchResults;
+};
