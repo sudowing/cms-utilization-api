@@ -17,29 +17,43 @@ const mapProviderPerformanceRecord = ((record: any) => {
     return record;
 });
 
-
 const ping = (ctx: Context) => {
   ctx.response.status = statusCodes.OK;
   ctx.response.body = { message: "hi there", timestamp: Date.now() };
 };
 
 const providerPerformance = async (ctx: Context) => {
-    const { geo, hcpcs, entityType } = ctx.request.body;
+    const { geo, hcpcs, entityType, from, size } = ctx.request.body;
+
+    const offset = from || 0;
+    const limit = size || 10000;
 
     if (
-        !geo.latitude ||
-        !geo.longitude ||
-        !geo.distanceValue
+        (
+            !geo.latitude ||
+            !geo.longitude ||
+            !geo.distanceValue
+        )
+        &&
+        (
+            !geo.top_left ||
+            !geo.bottom_right
+        )
+
     ) {
         ctx.status = statusCodes.BAD_REQUEST;
-        ctx.response.body = {message: "must send geo.latitude, geo.longitude and geo.distanceValue"};
+        ctx.response.body = {
+            message: "must send geo.latitude, geo.longitude and geo.distanceValue or geo.top_left and geo.bottom_right",
+        };
     }
 
     const geoOptions: ts.Payload2 = {
-        latitude: geo.latitude,
-        longitude: geo.longitude,
+        latitude: geo.latitude || null,
+        longitude: geo.longitude || null,
         distanceUnit: geo.distanceUnit || "miles",
         distanceValue: geo.distanceValue,
+        top_left: geo.top_left || null,
+        bottom_right: geo.bottom_right || null,
     };
 
     const hcpcsOptions: ts.Payload3 = {
@@ -49,9 +63,9 @@ const providerPerformance = async (ctx: Context) => {
 
     const entityTypeOption = entityType || "";
 
-    const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption);
+    const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption, offset, limit);
     const records = results.hits.hits.map((record: any) => {
-        const source = record._source
+        const source = record._source;
         source.performances = source.performances.map((performance: any) => {
             const {
                 rank_n_of_svcs,
@@ -67,17 +81,12 @@ const providerPerformance = async (ctx: Context) => {
                 ...remaining
             } = performance;
             return mapProviderPerformanceRecord(remaining);
-            // return remaining;
         });
         return source;
     });
     ctx.response.body = records;
 
 };
-
-
-
-
 
 const autocompleteServices = async (ctx: Context) => {
     const { qs } = ctx.query;
@@ -116,4 +125,3 @@ router.get("/ping", ping);
 router.get("/provider_performance", providerPerformance);
 router.get("/auto_services", autocompleteServices);
 router.get("/suggest_providers", suggestProviders);
-

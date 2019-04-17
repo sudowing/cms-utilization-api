@@ -3,15 +3,29 @@ import * as ts from "./cms-search.interfaces";
 
 const genGeoProviderQuery = (geoOptions: ts.Payload2, hcpcsOptions: ts.Payload3, entityType: string = "") => {
     const payload: ts.Payload1 = {};
-    payload.filter = {
-        geo_distance: {
-            distance: `${geoOptions.distanceValue}${geoOptions.distanceUnit}`,
-            location: {
-                lat: geoOptions.latitude,
-                lon: geoOptions.longitude,
+    let geoFilter;
+    if (geoOptions.top_left && geoOptions.bottom_right) {
+        geoFilter = {
+            geo_bounding_box: {
+                location: {
+                    top_left: geoOptions.top_left,
+                    bottom_right: geoOptions.bottom_right,
+                },
             },
-        },
-    };
+        };
+    } else {
+        geoFilter = {
+            geo_distance: {
+                distance: `${geoOptions.distanceValue}${geoOptions.distanceUnit}`,
+                location: {
+                    lat: geoOptions.latitude,
+                    lon: geoOptions.longitude,
+                },
+            },
+        };
+    }
+
+    payload.filter = geoFilter;
     payload.must = [];
     if (entityType) {
         payload.must.push({match: {entity_type: entityType}});
@@ -30,11 +44,15 @@ export const searchGeoProviders = async (
     geoOptions: ts.Payload2,
     hcpcsOptions: ts.Payload3,
     entityType: string = "",
+    from: number = 0,
+    size: number = 10000,
 ) => {
     const geoProviderQuery = {
         query: {
             bool : genGeoProviderQuery(geoOptions, hcpcsOptions, entityType),
         },
+        from,
+        size,
     };
     const searchResults = await es.search({
         index: "provider-performance",
