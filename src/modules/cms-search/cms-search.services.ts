@@ -56,3 +56,22 @@ export const autocompleteServices = async (search: string = "") => {
     });
     return searchResults;
 };
+
+export const suggestProviders = async (search: string = "") => {
+    const suggestProvidersBody = {
+        suggest: {
+            hcpcs_suggest : {
+                prefix : search,
+                completion : {
+                    field : "suggest",
+                },
+            }
+        }
+    }
+    const searchResults = await es.search({
+        index: "providers",
+        body: suggestProvidersBody,
+    });
+    return searchResults;
+};
+

@@ -57,6 +57,20 @@ const autocompleteServices = async (ctx: Context) => {
     ctx.response.body = records;
 };
 
+const suggestProviders = async (ctx: Context) => {
+    const { qs } = ctx.query;
+    if (!qs) {
+        ctx.status = statusCodes.BAD_REQUEST;
+        ctx.response.body = {message: "must send qs"};
+    }
+
+    const results: any = await service.suggestProviders(qs);
+    const records = results.suggest.hcpcs_suggest[0].options.map((record: any) => {
+        const { suggest, ...rest} = record._source;
+        return rest;
+    });
+    ctx.response.body = records;
+};
 
 export const router = new Router<unknown>();
 
@@ -64,5 +78,5 @@ router.get("/ping", ping);
 
 router.get("/provider_performance", providerPerformance);
 router.get("/auto_services", autocompleteServices);
-
+router.get("/suggest_providers", suggestProviders);
 
