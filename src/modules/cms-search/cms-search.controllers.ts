@@ -30,8 +30,8 @@ const providerPerformance = async (ctx: Context) => {
     };
 
     const hcpcsOptions: ts.Payload3 = {
-        hcpcsCodes: hcpcs.codes || [],
-        allServices: hcpcs.all || false,
+        hcpcsCodes: hcpcs && hcpcs.codes ? hcpcs.codes : [],
+        allServices: hcpcs && hcpcs.hasOwnProperty("all") ? hcpcs.all : false,
     };
 
     const entityTypeOption = entityType || "";
@@ -39,8 +39,6 @@ const providerPerformance = async (ctx: Context) => {
     const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption);
     ctx.response.body = results;
 };
-
-
 
 const autocompleteServices = async (ctx: Context) => {
     const { qs } = ctx.query;
