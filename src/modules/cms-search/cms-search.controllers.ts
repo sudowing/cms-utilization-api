@@ -5,6 +5,19 @@ import * as Router from "koa-router";
 import * as ts from "./cms-search.interfaces";
 import * as service from "./cms-search.services";
 
+const mapProviderPerformanceRecord = ((record: any) => {
+    record.n_of_svcs = parseInt(record.n_of_svcs, 10);
+    record.avg_mcare_pay_amt = parseFloat(record.avg_mcare_pay_amt);
+    record.avg_submitted_charge_amt = parseFloat(record.avg_submitted_charge_amt);
+    record.avg_mcare_allowed_amt = parseFloat(record.avg_mcare_allowed_amt);
+    record.avg_mcare_standardized_amt = parseFloat(record.avg_mcare_standardized_amt);
+    record.est_ttl_mcare_pay_amt = parseFloat(record.est_ttl_mcare_pay_amt);
+    record.est_ttl_submitted_charge_amt = parseFloat(record.est_ttl_submitted_charge_amt);
+    record.var_avg_mcare_submitted_charge_pay_amt = parseFloat(record.var_avg_mcare_submitted_charge_pay_amt);
+    return record;
+});
+
+
 const ping = (ctx: Context) => {
   ctx.response.status = statusCodes.OK;
   ctx.response.body = { message: "hi there", timestamp: Date.now() };
@@ -37,8 +50,34 @@ const providerPerformance = async (ctx: Context) => {
     const entityTypeOption = entityType || "";
 
     const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption);
-    ctx.response.body = results;
+    const records = results.hits.hits.map((record: any) => {
+        const source = record._source
+        source.performances = source.performances.map((performance: any) => {
+            const {
+                rank_n_of_svcs,
+                rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
+                rank_n_of_mcare_beneficiaries,
+                rank_avg_mcare_standardized_amt,
+                rank_avg_mcare_allowed_amt,
+                rank_avg_submitted_charge_amt,
+                rank_avg_mcare_pay_amt,
+                rank_est_ttl_mcare_pay_amt,
+                rank_est_ttl_submitted_charge_amt,
+                rank_var_avg_mcare_submitted_charge_pay_amt,
+                ...remaining
+            } = performance;
+            return mapProviderPerformanceRecord(remaining);
+            // return remaining;
+        });
+        return source;
+    });
+    ctx.response.body = records;
+
 };
+
+
+
+
 
 const autocompleteServices = async (ctx: Context) => {
     const { qs } = ctx.query;
