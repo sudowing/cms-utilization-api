@@ -24,20 +24,20 @@ export const providerOrganization = async (npi: number = 0) => {
   return results.length ? results[0] as ts.ProviderOrganization : null;
 };
 
-export const providerPerformances = async (hcpcs: string = "", npi: number = 0) => {
+export const providerPerformances = async (hcpcs: string = "", npi: number = 0): Promise<ts.ProviderPerformance[]> => {
   const where = whereServiceProvider(hcpcs, npi);
   const results: any = await qry.provider_performance(where);
-  return results.map(map.providerPerformances);
+  return results.map(map.providerPerformances) as ts.ProviderPerformance[];
 };
 
 export const service = async (hcpcs: string = "") => {
   const results = await qry.services(hcpcs);
-  return results.length ? results[0] as any : null;
+  return results.length ? results[0] as ts.Service : null;
 };
 
 export const servicePerformance = async (hcpcs: string = "") => {
   const results = await qry.service_performance(hcpcs);
-  return results.length ? results[0] as any : null;
+  return results.length ? map.servicePerformance(results[0]) : null;
 };
 
 export const serviceProviderPerformance = async (hcpcs: string = "", npi: number = 0) => {

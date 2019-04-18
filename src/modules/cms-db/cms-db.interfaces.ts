@@ -41,14 +41,20 @@ export interface ProviderPerformance {
     avg_mcare_standardized_amt: number;
     prisma_id: number;
 };
-// services
-// [
-//     {
-//         "hcpcs_code": "11750",
-//         "hcpcs_description": "Removal of nail",
-//         "hcpcs_drug_indicator": "N"
-//     }
-// ]
+
+export interface Service {
+    hcpcs_code: string;
+    hcpcs_description: string;
+    hcpcs_drug_indicator: string;
+};
+
+
+export interface ServicePerformance {
+    hcpcs_code: string;
+    hcpcs_description: string;
+    hcpcs_drug_indicator: string;
+};
+
 
 // service_performance
 // "hcpcs_code": "00120",
