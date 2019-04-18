@@ -1,8 +1,21 @@
 import { elasticsearch as es } from "../../network-sources";
 import * as ts from "./cms-search.interfaces";
 
-const genGeoProviderQuery = (geoOptions: ts.Payload2, hcpcsOptions: ts.Payload3, entityType: string = "") => {
-    const payload: ts.Payload1 = {};
+
+const mapProviderPerformanceRecord = ((record: any) => {
+    record.n_of_svcs = parseInt(record.n_of_svcs, 10);
+    record.avg_mcare_pay_amt = parseFloat(record.avg_mcare_pay_amt);
+    record.avg_submitted_charge_amt = parseFloat(record.avg_submitted_charge_amt);
+    record.avg_mcare_allowed_amt = parseFloat(record.avg_mcare_allowed_amt);
+    record.avg_mcare_standardized_amt = parseFloat(record.avg_mcare_standardized_amt);
+    record.est_ttl_mcare_pay_amt = parseFloat(record.est_ttl_mcare_pay_amt);
+    record.est_ttl_submitted_charge_amt = parseFloat(record.est_ttl_submitted_charge_amt);
+    record.var_avg_mcare_submitted_charge_pay_amt = parseFloat(record.var_avg_mcare_submitted_charge_pay_amt);
+    return record;
+});
+
+const genGeoProviderQuery = (geoOptions: ts.GeoOptions, hcpcsOptions: ts.ServiceOptions, entityType: string = "") => {
+    const payload: ts.SearchOptions = {};
     let geoFilter;
     if (geoOptions.top_left && geoOptions.bottom_right) {
         geoFilter = {
@@ -41,12 +54,12 @@ const genGeoProviderQuery = (geoOptions: ts.Payload2, hcpcsOptions: ts.Payload3,
 };
 
 export const searchGeoProviders = async (
-    geoOptions: ts.Payload2,
-    hcpcsOptions: ts.Payload3,
+    geoOptions: ts.GeoOptions,
+    hcpcsOptions: ts.ServiceOptions,
     entityType: string = "",
     from: number = 0,
     size: number = 10000,
-) => {
+): Promise<ts.ProviderPerformanceRecord[]> => {
     const geoProviderQuery = {
         query: {
             bool : genGeoProviderQuery(geoOptions, hcpcsOptions, entityType),
@@ -58,11 +71,31 @@ export const searchGeoProviders = async (
         index: "provider-performance",
         body: geoProviderQuery,
     });
-    return searchResults;
+    const records = searchResults.hits.hits.map((record: any) => {
+        const source = record._source;
+        source.performances = source.performances.map((performance: any) => {
+            const {
+                rank_n_of_svcs,
+                rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
+                rank_n_of_mcare_beneficiaries,
+                rank_avg_mcare_standardized_amt,
+                rank_avg_mcare_allowed_amt,
+                rank_avg_submitted_charge_amt,
+                rank_avg_mcare_pay_amt,
+                rank_est_ttl_mcare_pay_amt,
+                rank_est_ttl_submitted_charge_amt,
+                rank_var_avg_mcare_submitted_charge_pay_amt,
+                ...remaining
+            } = performance;
+            return mapProviderPerformanceRecord(remaining);
+        });
+        return source;
+    });
+    return records;
 };
 
 
-export const autocompleteServices = async (search: string = "") => {
+export const autocompleteServices = async (search: string = ""): Promise<ts.ServiceSuggestion[]> => {
     const serviceAutocomplete = {
         query: {
             match : { hcpcs_description: search },
@@ -72,10 +105,14 @@ export const autocompleteServices = async (search: string = "") => {
         index: "services",
         body: serviceAutocomplete,
     });
-    return searchResults;
+    const records = searchResults.hits.hits.map((record: any) => {
+        const { hcpcs_code, hcpcs_description} = record._source;
+        return { hcpcs_code, hcpcs_description };
+    });
+    return records;
 };
 
-export const suggestProviders = async (search: string = "") => {
+export const suggestProviders = async (search: string = ""): Promise<ts.ProviderSuggestion[]> => {
     const suggestProvidersBody = {
         suggest: {
             hcpcs_suggest : {
@@ -86,10 +123,13 @@ export const suggestProviders = async (search: string = "") => {
             }
         }
     }
-    const searchResults = await es.search({
+    const searchResults: any = await es.search({
         index: "providers",
         body: suggestProvidersBody,
     });
-    return searchResults;
+    const records = searchResults.suggest.hcpcs_suggest[0].options.map((record: any) => {
+        const { suggest, ...rest} = record._source;
+        return rest;
+    });
+    return records;
 };
-

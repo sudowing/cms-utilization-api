@@ -5,23 +5,6 @@ import * as Router from "koa-router";
 import * as ts from "./cms-search.interfaces";
 import * as service from "./cms-search.services";
 
-const mapProviderPerformanceRecord = ((record: any) => {
-    record.n_of_svcs = parseInt(record.n_of_svcs, 10);
-    record.avg_mcare_pay_amt = parseFloat(record.avg_mcare_pay_amt);
-    record.avg_submitted_charge_amt = parseFloat(record.avg_submitted_charge_amt);
-    record.avg_mcare_allowed_amt = parseFloat(record.avg_mcare_allowed_amt);
-    record.avg_mcare_standardized_amt = parseFloat(record.avg_mcare_standardized_amt);
-    record.est_ttl_mcare_pay_amt = parseFloat(record.est_ttl_mcare_pay_amt);
-    record.est_ttl_submitted_charge_amt = parseFloat(record.est_ttl_submitted_charge_amt);
-    record.var_avg_mcare_submitted_charge_pay_amt = parseFloat(record.var_avg_mcare_submitted_charge_pay_amt);
-    return record;
-});
-
-const ping = (ctx: Context) => {
-  ctx.response.status = statusCodes.OK;
-  ctx.response.body = { message: "hi there", timestamp: Date.now() };
-};
-
 const providerPerformance = async (ctx: Context) => {
     const { geo, hcpcs, entityType, from, size } = ctx.request.body;
 
@@ -47,7 +30,7 @@ const providerPerformance = async (ctx: Context) => {
         };
     }
 
-    const geoOptions: ts.Payload2 = {
+    const geoOptions: ts.GeoOptions = {
         latitude: geo.latitude || null,
         longitude: geo.longitude || null,
         distanceUnit: geo.distanceUnit || "miles",
@@ -56,34 +39,14 @@ const providerPerformance = async (ctx: Context) => {
         bottom_right: geo.bottom_right || null,
     };
 
-    const hcpcsOptions: ts.Payload3 = {
+    const hcpcsOptions: ts.ServiceOptions = {
         hcpcsCodes: hcpcs && hcpcs.codes ? hcpcs.codes : [],
         allServices: hcpcs && hcpcs.hasOwnProperty("all") ? hcpcs.all : false,
     };
 
     const entityTypeOption = entityType || "";
 
-    const results = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption, offset, limit);
-    const records = results.hits.hits.map((record: any) => {
-        const source = record._source;
-        source.performances = source.performances.map((performance: any) => {
-            const {
-                rank_n_of_svcs,
-                rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
-                rank_n_of_mcare_beneficiaries,
-                rank_avg_mcare_standardized_amt,
-                rank_avg_mcare_allowed_amt,
-                rank_avg_submitted_charge_amt,
-                rank_avg_mcare_pay_amt,
-                rank_est_ttl_mcare_pay_amt,
-                rank_est_ttl_submitted_charge_amt,
-                rank_var_avg_mcare_submitted_charge_pay_amt,
-                ...remaining
-            } = performance;
-            return mapProviderPerformanceRecord(remaining);
-        });
-        return source;
-    });
+    const records = await service.searchGeoProviders(geoOptions, hcpcsOptions, entityTypeOption, offset, limit);
     ctx.response.body = records;
 
 };
@@ -95,11 +58,7 @@ const autocompleteServices = async (ctx: Context) => {
         ctx.response.body = {message: "must send qs"};
     }
 
-    const results = await service.autocompleteServices(qs);
-    const records = results.hits.hits.map((record: any) => {
-        const { hcpcs_code, hcpcs_description} = record._source;
-        return { hcpcs_code, hcpcs_description };
-    });
+    const records = await service.autocompleteServices(qs);
     ctx.response.body = records;
 };
 
@@ -110,17 +69,11 @@ const suggestProviders = async (ctx: Context) => {
         ctx.response.body = {message: "must send qs"};
     }
 
-    const results: any = await service.suggestProviders(qs);
-    const records = results.suggest.hcpcs_suggest[0].options.map((record: any) => {
-        const { suggest, ...rest} = record._source;
-        return rest;
-    });
+    const records = await service.suggestProviders(qs);
     ctx.response.body = records;
 };
 
 export const router = new Router<unknown>();
-
-router.get("/ping", ping);
 
 router.get("/provider_performance", providerPerformance);
 router.get("/auto_services", autocompleteServices);

@@ -1,9 +1,9 @@
-export interface Payload1 {
+export interface SearchOptions {
     must?: any[];
     filter?: any;
 };
 
-export interface Payload2 {
+export interface GeoOptions {
     latitude?: number;
     longitude?: number;
     distanceUnit?: string;
@@ -12,7 +12,51 @@ export interface Payload2 {
     bottom_right?: any;
 };
 
-export interface Payload3 {
+export interface ServiceOptions {
     hcpcsCodes: string[];
     allServices: boolean;
+};
+
+export interface ServiceSuggestion {
+    hcpcs_code: string;
+    hcpcs_description: string;
+};
+
+export interface ProviderSuggestion {
+    npi: number;
+    entity_type: string;
+    address_city: string;
+    address_state: string;
+    gender: string;
+    name_first: string;
+    name_last: string;
+};
+
+interface ProviderPerformanceDetail {
+    npi: number;
+    hcpcs_code: string;
+    n_of_svcs: number;
+    n_of_distinct_mcare_beneficiary_per_day_svcs: number;
+    n_of_mcare_beneficiaries: number;
+    avg_mcare_pay_amt: number;
+    avg_submitted_charge_amt: number;
+    avg_mcare_allowed_amt: number;
+    avg_mcare_standardized_amt: number;
+    est_ttl_mcare_pay_amt: number;
+    est_ttl_submitted_charge_amt: number;
+    mcare_participation_indicator: boolean;
+    place_of_service: string;
+    var_avg_mcare_submitted_charge_pay_amt: number;
+};
+
+export interface ProviderPerformanceLocation {
+    lat: string;
+    lon: string;
+}
+
+export interface ProviderPerformanceRecord {
+    npi: number;
+    entity_type: string;
+    location: ProviderPerformanceLocation;
+    performances: ProviderPerformanceDetail[];
 };
