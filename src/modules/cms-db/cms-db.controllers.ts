@@ -2,95 +2,108 @@ import * as statusCodes from "http-status-codes";
 import { Context } from "koa";
 import * as Router from "koa-router";
 
-import * as qry from "./cms-db.queries";
+import * as svc from "./cms-db.services";
 
-const ping = (ctx: Context) => {
-  ctx.response.status = statusCodes.OK;
-  ctx.response.body = { message: "hi there", timestamp: Date.now() };
+const noRecord = "record not found";
+
+const provider = async (ctx: Context) => {
+  const { npi } = ctx.query || null;
+  const record = await svc.provider(npi);
+
+  if (!record) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: noRecord, timestamp: Date.now() };
+  } else {
+    ctx.response.body = record;
+  }
 };
 
-const provider_performance = async (ctx: Context) => {
+const providerIndividual = async (ctx: Context) => {
+  const { npi } = ctx.query || null;
+  const record = await svc.providerIndividual(npi);
+  if (!record) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: noRecord, timestamp: Date.now() };
+  } else {
+    ctx.response.body = record;
+  }
+};
+
+const providerOrganization = async (ctx: Context) => {
+  const { npi } = ctx.query || null;
+  const record = await svc.providerOrganization(npi);
+  if (!record) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: noRecord, timestamp: Date.now() };
+  } else {
+    ctx.response.body = record;
+  }
+};
+
+const providerPerformance = async (ctx: Context) => {
   const { hcpcs, npi } = ctx.query;
-  const where: any = {};
-  if ( hcpcs ) { where.hcpcs_code = hcpcs; }
-  if ( npi ) { where.npi = npi; }
-
-  const results = await qry.provider_performance(where);
+  const results = await svc.providerPerformances(hcpcs, npi);
   ctx.response.body = results;
 };
 
-const providers = async (ctx: Context) => {
-  const { npi } = ctx.query || null;
-  const results = await qry.providers(npi);
-  ctx.response.body = results;
-};
-
-const providers_individuals = async (ctx: Context) => {
-  const { npi } = ctx.query || null;
-  const results = await qry.providers_individuals(npi);
-  ctx.response.body = results;
-};
-
-const providers_organizations = async (ctx: Context) => {
-  const { npi } = ctx.query || null;
-  const results = await qry.providers_organizations(npi);
-  ctx.response.body = results;
+const service = async (ctx: Context) => {
+  const { hcpcs } = ctx.query || null;
+  const record = await svc.service(hcpcs);
+  if (!record) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: noRecord, timestamp: Date.now() };
+  } else {
+    ctx.response.body = record;
+  }
 };
 
 const service_performance = async (ctx: Context) => {
   const { hcpcs } = ctx.query || null;
-  const results = await qry.service_performance(hcpcs);
-  ctx.response.body = results;
+  const record = await svc.servicePerformance(hcpcs);
+  if (!record) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: noRecord, timestamp: Date.now() };
+  } else {
+    ctx.response.body = record;
+  }
 };
 
-const whereServiceProvider = (ctx: Context) => {
-  const { hcpcs, npi } = ctx.query;
-  const where: any = {};
-  if ( hcpcs ) { where.hcpcs_code = hcpcs; }
-  if ( npi ) { where.npi = npi; }
-
-  if (!where.hcpcs_code && !where.npi) {
-    ctx.status = statusCodes.BAD_REQUEST;
-    ctx.response.body = {message: "must send hcpcs or npi"};
-  }
-  return where;
-}
-
 const service_provider_performance = async (ctx: Context) => {
-  const where = whereServiceProvider(ctx);
-  const results = await qry.service_provider_performance(where);
-  ctx.response.body = results;
+  const { hcpcs, npi } = ctx.query;
+  if (!hcpcs && !npi) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: "hcpcs or npi required", timestamp: Date.now() };
+  } else {
+    const results = await svc.serviceProviderPerformance(hcpcs, npi);
+    ctx.response.body = results;
+  }
 };
 
 const service_provider_performance_summary = async (ctx: Context) => {
   const { npi } = ctx.query || null;
-  const results = await qry.service_provider_performance_summary(npi);
-  ctx.response.body = results;
+  if (!npi) {
+    ctx.response.status = statusCodes.BAD_REQUEST;
+    ctx.response.body = { message: "npi required", timestamp: Date.now() };
+  } else {
+    const results = await svc.serviceProviderPerformanceSummary(npi);
+    ctx.response.body = results;
+  }
 };
 
 const service_provider_performance_summary_type = async (ctx: Context) => {
   const { id } = ctx.query || null;
-  const results = await qry.service_provider_performance_summary_type(id);
+  const results = await svc.serviceProviderPerformanceSummaryType(id);
   ctx.response.body = results;
 };
-
-const services = async (ctx: Context) => {
-  const { hcpcs } = ctx.query || null;
-  const results = await qry.services(hcpcs);
-  ctx.response.body = results;
-};
-
 
 export const router = new Router<unknown>();
 
-router.get("/ping", ping);
+router.get("/provider", provider);
+router.get("/providers_individual", providerIndividual);
+router.get("/providers_organization", providerOrganization);
+router.get("/provider_performance", providerPerformance);
 
-router.get("/providers", providers);
-router.get("/providers_individuals", providers_individuals);
-router.get("/providers_organizations", providers_organizations);
-router.get("/provider_performance", provider_performance);
-
-router.get("/services", services);
+router.get("/service", service);
 router.get("/service_performance", service_performance);
 
 router.get("/service_provider_performance", service_provider_performance);
