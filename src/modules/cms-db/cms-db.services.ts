@@ -1,13 +1,9 @@
+import * as ts from "./cms-db.interfaces";
 import * as map from "./cms-db.mappers";
 import * as qry from "./cms-db.queries";
 
-export interface ServiceProviderTerms {
-    npi?: number;
-    hcpcs_code?: string;
-}
-
-const whereServiceProvider = (hcpcs: string = "", npi: number = 0): ServiceProviderTerms => {
-    const where: ServiceProviderTerms = {};
+const whereServiceProvider = (hcpcs: string = "", npi: number = 0): ts.ServiceProviderTerms => {
+    const where: ts.ServiceProviderTerms = {};
     if ( hcpcs ) { where.hcpcs_code = hcpcs; }
     if ( npi ) { where.npi = npi; }
     return where;
@@ -15,23 +11,23 @@ const whereServiceProvider = (hcpcs: string = "", npi: number = 0): ServiceProvi
 
 export const provider = async (npi: number = 0) => {
   const results = await qry.providers(npi);
-  return results.length ? results[0] as any : null;
+  return results.length ? results[0] as ts.Provider : null;
 };
 
 export const providerIndividual = async (npi: number = 0) => {
   const results = await qry.providers_individuals(npi);
-  return results.length ? results[0] as any : null;
+  return results.length ? results[0] as ts.ProviderIndividual : null;
 };
 
 export const providerOrganization = async (npi: number = 0) => {
   const results = await qry.providers_organizations(npi);
-  return results.length ? results[0] as any : null;
+  return results.length ? results[0] as ts.ProviderOrganization : null;
 };
 
 export const providerPerformances = async (hcpcs: string = "", npi: number = 0) => {
   const where = whereServiceProvider(hcpcs, npi);
   const results: any = await qry.provider_performance(where);
-  return results;
+  return results.map(map.providerPerformances);
 };
 
 export const service = async (hcpcs: string = "") => {

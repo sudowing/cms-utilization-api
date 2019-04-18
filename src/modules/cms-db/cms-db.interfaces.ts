@@ -1,48 +1,46 @@
 // providers
-// [
-//     {
-//         "npi": 1679883219,
-//         "entity_type": "I",
-//         "provider_type": "Chiropractic",
-//         "address_street_01": "75 WASHINGTON STREET",
-//         "address_street_02": null,
-//         "address_city": "TAUNTON",
-//         "address_zip_code": "02780",
-//         "address_state": "MA",
-//         "address_country": "US",
-//         "address_latitude": "41.904717",
-//         "address_longitude": "-71.095178"
-//     }
-// ]
+export interface Provider {
+    npi: number;
+    entity_type: string;
+    provider_type: string;
+    address_street_01: string;
+    address_street_02: string|null;
+    address_city: string;
+    address_zip_code: string;
+    address_state: string;
+    address_country: string;
+    address_latitude: string;
+    address_longitude: string;
+};
 
-// providers_individuals
-// "npi": 1679883219,
-// "name_last": "STAULA",
-// "name_first": "SAMUEL",
-// "name_middle": "K",
-// "credentials": "D.C.",
-// "gender": "M"
+export interface ProviderIndividual {
+    npi: number;
+    name_last: string;
+    name_first: string;
+    name_middle: string;
+    credentials: string;
+    gender: string;
+};
 
-// providers_organizations
-// {
-//     "npi": 1689608390,
-//     "name": "THE KROGER CO"
-// }
+export interface ProviderOrganization {
+    npi: number;
+    name: string;
+};
 
-// provider_performance
-// "npi": 1689608390,
-// "mcare_participation_indicator": "Y",
-// "place_of_service": "O",
-// "hcpcs_code": "90656",
-// "n_of_svcs": "46",
-// "n_of_mcare_beneficiaries": 46,
-// "n_of_distinct_mcare_beneficiary_per_day_svcs": 46,
-// "avg_mcare_allowed_amt": "17.052173913",
-// "avg_submitted_charge_amt": "17.052173913",
-// "avg_mcare_pay_amt": "16.714347826",
-// "avg_mcare_standardized_amt": "16.714347826",
-// "prisma_id": 5693206
-
+export interface ProviderPerformance {
+    npi: number;
+    mcare_participation_indicator: string;
+    place_of_service: string;
+    hcpcs_code: string;
+    n_of_svcs: number;
+    n_of_mcare_beneficiaries: number;
+    n_of_distinct_mcare_beneficiary_per_day_svcs: number;
+    avg_mcare_allowed_amt: number;
+    avg_submitted_charge_amt: number;
+    avg_mcare_pay_amt: number;
+    avg_mcare_standardized_amt: number;
+    prisma_id: number;
+};
 // services
 // [
 //     {
@@ -161,3 +159,9 @@
 // "slug": "overall",
 // "description": "Overall Summary",
 // "group_membership": false
+
+
+export interface ServiceProviderTerms {
+    npi?: number;
+    hcpcs_code?: string;
+}
