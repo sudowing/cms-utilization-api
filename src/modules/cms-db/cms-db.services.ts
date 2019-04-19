@@ -9,17 +9,17 @@ const whereServiceProvider = (hcpcs: string = "", npi: number = 0): ts.ServicePr
     return where;
 };
 
-export const provider = async (npi: number = 0) => {
+export const provider = async (npi: number = 0): Promise<ts.Provider> => {
   const results = await qry.providers(npi);
   return results.length ? results[0] as ts.Provider : null;
 };
 
-export const providerIndividual = async (npi: number = 0) => {
+export const providerIndividual = async (npi: number = 0): Promise<ts.ProviderIndividual> => {
   const results = await qry.providers_individuals(npi);
   return results.length ? results[0] as ts.ProviderIndividual : null;
 };
 
-export const providerOrganization = async (npi: number = 0) => {
+export const providerOrganization = async (npi: number = 0): Promise<ts.ProviderOrganization> => {
   const results = await qry.providers_organizations(npi);
   return results.length ? results[0] as ts.ProviderOrganization : null;
 };
@@ -30,28 +30,32 @@ export const providerPerformances = async (hcpcs: string = "", npi: number = 0):
   return results.map(map.providerPerformances) as ts.ProviderPerformance[];
 };
 
-export const service = async (hcpcs: string = "") => {
+export const service = async (hcpcs: string = ""): Promise<ts.Service> => {
   const results = await qry.services(hcpcs);
   return results.length ? results[0] as ts.Service : null;
 };
 
-export const servicePerformance = async (hcpcs: string = "") => {
+export const servicePerformance = async (hcpcs: string = "")
+  : Promise<ts.ServicePerformance> => {
   const results = await qry.service_performance(hcpcs);
   return results.length ? map.servicePerformance(results[0]) : null;
 };
 
-export const serviceProviderPerformance = async (hcpcs: string = "", npi: number = 0) => {
+export const serviceProviderPerformance = async (hcpcs: string = "", npi: number = 0):
+  Promise<ts.ServiceProviderPerformance[]> => {
   const where = whereServiceProvider(hcpcs, npi);
   const results = await qry.service_provider_performance(where);
-  return results;
+  return results.length ? results.map(map.serviceProviderPerformance) : null;
 };
 
-export const serviceProviderPerformanceSummary = async (npi: number = 0) => {
+export const serviceProviderPerformanceSummary = async (npi: number = 0)
+  : Promise<ts.ServiceProviderPerformanceSummary[]> => {
   const results = await qry.service_provider_performance_summary(npi);
-  return results;
+  return results.length ? results.map(map.serviceProviderPerformanceSummary) : null;
 };
 
-export const serviceProviderPerformanceSummaryType = async (id: number = 0) => {
+export const serviceProviderPerformanceSummaryType = async (id: number = 0)
+  : Promise<ts.ServiceProviderPerformanceSummaryType[]> => {
   const results = await qry.service_provider_performance_summary_type(id);
   return results;
 };
