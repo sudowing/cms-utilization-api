@@ -12,7 +12,7 @@ export const resolvers = {
       return await svc.providerOrganization(1003082041);
     },
     async providerPerformances(obj: any, args: any, context: any, info: any) {
-      return await svc.providerPerformances("", 1003082041);
+      return await svc.providerPerformances({ npi: 1003082041});
     },
 
     async service(obj: any, args: any, context: any, info: any) {
@@ -22,7 +22,7 @@ export const resolvers = {
       return await svc.servicePerformance("00120");
     },
     async serviceProviderPerformance(obj: any, args: any, context: any, info: any) {
-      return await svc.serviceProviderPerformance("00120");
+      return await svc.serviceProviderPerformance({ hcpcs: "00120"});
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any) {
       return await svc.serviceProviderPerformanceSummary(1003082041);

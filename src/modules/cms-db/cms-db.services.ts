@@ -2,10 +2,12 @@ import * as ts from "./cms-db.interfaces";
 import * as map from "./cms-db.mappers";
 import * as qry from "./cms-db.queries";
 
-const whereServiceProvider = (hcpcs: string = "", npi: number = 0): ts.ServiceProviderTerms => {
+const whereServiceProvider = (searchOptions: any = {
+  hcpcs: "", npi: 0,
+}): ts.ServiceProviderTerms => {
     const where: ts.ServiceProviderTerms = {};
-    if ( hcpcs ) { where.hcpcs_code = hcpcs; }
-    if ( npi ) { where.npi = npi; }
+    if ( searchOptions.hcpcs ) { where.hcpcs_code = searchOptions.hcpcs; }
+    if ( searchOptions.npi ) { where.npi = searchOptions.npi; }
     return where;
 };
 
@@ -24,8 +26,10 @@ export const providerOrganization = async (npi: number = 0): Promise<ts.Provider
   return results.length ? results[0] as ts.ProviderOrganization : null;
 };
 
-export const providerPerformances = async (hcpcs: string = "", npi: number = 0): Promise<ts.ProviderPerformance[]> => {
-  const where = whereServiceProvider(hcpcs, npi);
+export const providerPerformances = async (searchOptions: any = {
+  hcpcs: "", npi: 0,
+}): Promise<ts.ProviderPerformance[]> => {
+  const where = whereServiceProvider(searchOptions);
   const results: any = await qry.provider_performance(where);
   return results.map(map.providerPerformances) as ts.ProviderPerformance[];
 };
@@ -41,9 +45,11 @@ export const servicePerformance = async (hcpcs: string = "")
   return results.length ? map.servicePerformance(results[0]) : null;
 };
 
-export const serviceProviderPerformance = async (hcpcs: string = "", npi: number = 0):
+export const serviceProviderPerformance = async (searchOptions: any = {
+  hcpcs: "", npi: 0,
+}):
   Promise<ts.ServiceProviderPerformance[]> => {
-  const where = whereServiceProvider(hcpcs, npi);
+  const where = whereServiceProvider(searchOptions);
   const results = await qry.service_provider_performance(where);
   return results.length ? results.map(map.serviceProviderPerformance) : null;
 };

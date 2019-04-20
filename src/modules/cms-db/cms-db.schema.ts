@@ -144,8 +144,8 @@ const typeDefs = gql`
       rank_avg_mcare_pay_amt: Float!
       rank_est_ttl_mcare_pay_amt: Float!
       rank_est_ttl_submitted_charge_amt: Float!
-      mcare_participation_indicator: Float!
-      place_of_service: Float!
+      mcare_participation_indicator: String!
+      place_of_service: String!
       var_avg_mcare_submitted_charge_pay_amt: Float!
       rank_var_avg_mcare_submitted_charge_pay_amt: Float!
       prisma_id: Float!

@@ -42,7 +42,7 @@ const providerOrganization = async (ctx: Context) => {
 
 const providerPerformance = async (ctx: Context) => {
   const { hcpcs, npi } = ctx.query;
-  const results = await svc.providerPerformances(hcpcs, npi);
+  const results = await svc.providerPerformances({hcpcs, npi});
   ctx.response.body = results;
 };
 
@@ -74,7 +74,7 @@ const service_provider_performance = async (ctx: Context) => {
     ctx.response.status = statusCodes.BAD_REQUEST;
     ctx.response.body = { message: "hcpcs or npi required", timestamp: Date.now() };
   } else {
-    const results = await svc.serviceProviderPerformance(hcpcs, npi);
+    const results = await svc.serviceProviderPerformance({hcpcs, npi});
     ctx.response.body = results;
   }
 };
