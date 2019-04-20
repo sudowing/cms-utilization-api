@@ -1,0 +1,52 @@
+{
+  ping{
+    date
+  }
+  suggestProviders{
+    name_first
+  }
+  autocompleteServices{
+		hcpcs_description
+  }
+  searchGeoProviders{
+    npi
+  }
+  getProvider{
+    number
+  }
+  provider{
+    npi
+  }
+  service{
+    hcpcs_code
+  }
+  
+  provider{
+    npi
+  }
+  providerIndividual{
+    npi
+  }
+  providerOrganization{
+    npi
+  }
+  providerPerformances{
+    hcpcs_code
+  }
+  service{
+    hcpcs_code
+  }
+  servicePerformance{
+    hcpcs_code
+  }
+  serviceProviderPerformance{
+    hcpcs_code
+  }
+  serviceProviderPerformanceSummary{
+    npi
+  }
+  serviceProviderPerformanceSummaryType{
+    description
+  }
+  
+}
