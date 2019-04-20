@@ -46,8 +46,8 @@ export const service_provider_performance_summary = (npi: number) => {
 export const service_provider_performance_summary_type = (id: number) => {
     const query = db.from("cms.service_provider_performance_summary_type as table");
     if (id) {
-        query.where("table.id", id)
-            .limit(1);
+        query.where("table.id", id);
+            // .limit(1);
     }
     return query;
 };

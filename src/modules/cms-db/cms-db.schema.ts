@@ -5,20 +5,15 @@ import { resolvers } from "./cms-db.resolvers";
 
 const typeDefs = gql`
   type Query {
-    ping: AppPing
-    healthcheck: AppHealthCheck
-  }
-  type AppPing {
-    date: String
-    message: String
-  }
-  type AppHealthCheck {
-    date: String
-    resources: [AppResourceHealthReport]
-  }
-  type AppResourceHealthReport {
-    resource: String
-    up: Boolean
+    provider: Provider
+    providerIndividual: ProviderIndividual
+    providerOrganization: ProviderOrganization
+    providerPerformances: [ProviderPerformance!]
+    service: Service
+    servicePerformance: ServicePerformance
+    serviceProviderPerformance: [ServiceProviderPerformance!]
+    serviceProviderPerformanceSummary: [ServiceProviderPerformanceSummary!]
+    serviceProviderPerformanceSummaryType: [ServiceProviderPerformanceSummaryType!]
   }
 
   type Provider {
@@ -26,7 +21,7 @@ const typeDefs = gql`
       entity_type: String!
       provider_type: String!
       address_street_01: String!
-      address_street_02: String|null!
+      address_street_02: String!
       address_city: String!
       address_zip_code: String!
       address_state: String!
