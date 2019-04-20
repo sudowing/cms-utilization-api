@@ -5,20 +5,7 @@ import { resolvers } from "./npi-registry.resolvers";
 
 const typeDefs = gql`
   type Query {
-    ping: AppPing
-    healthcheck: AppHealthCheck
-  }
-  type AppPing {
-    date: String
-    message: String
-  }
-  type AppHealthCheck {
-    date: String
-    resources: [AppResourceHealthReport]
-  }
-  type AppResourceHealthReport {
-    resource: String
-    up: Boolean
+    getProvider: RegistryProfile
   }
   type RegistryProfileAddress {
     country_code: String!
