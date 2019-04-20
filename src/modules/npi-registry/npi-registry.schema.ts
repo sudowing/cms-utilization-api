@@ -1,6 +1,7 @@
 import { GraphQLModule } from "@graphql-modules/core";
 import gql from "graphql-tag";
 
+import { dbModule, searchModule } from "../index";
 import { resolvers } from "./npi-registry.resolvers";
 
 const typeDefs = gql`
@@ -66,7 +67,8 @@ const typeDefs = gql`
   }
 `;
 
-export const AppModule = new GraphQLModule({
+export const AppModule: GraphQLModule = new GraphQLModule({
   typeDefs,
   resolvers,
+  // imports: [dbModule, searchModule],
 });

@@ -1,6 +1,7 @@
 import { GraphQLModule } from "@graphql-modules/core";
 import gql from "graphql-tag";
 
+import { apiModule, dbModule } from "../index";
 import { resolvers } from "./cms-search.resolvers";
 
 const typeDefs = gql`
@@ -70,7 +71,8 @@ const typeDefs = gql`
 
 `;
 
-export const AppModule = new GraphQLModule({
+export const AppModule: GraphQLModule = new GraphQLModule({
   typeDefs,
   resolvers,
+  // imports: [dbModule, apiModule],
 });
