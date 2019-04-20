@@ -5,20 +5,9 @@ import { resolvers } from "./cms-search.resolvers";
 
 const typeDefs = gql`
   type Query {
-    ping: AppPing
-    healthcheck: AppHealthCheck
-  }
-  type AppPing {
-    date: String
-    message: String
-  }
-  type AppHealthCheck {
-    date: String
-    resources: [AppResourceHealthReport]
-  }
-  type AppResourceHealthReport {
-    resource: String
-    up: Boolean
+    searchGeoProviders: [ProviderPerformanceRecord!]
+    autocompleteServices: [ServiceSuggestion!]
+    suggestProviders: [ProviderSuggestion!]
   }
 
   input GeoOptions {

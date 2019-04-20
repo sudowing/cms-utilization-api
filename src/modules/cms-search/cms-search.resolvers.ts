@@ -1,46 +1,22 @@
+import * as svc from "./cms-search.services";
+
 export const resolvers = {
-    Query: {
-      ping(obj: any, args: any, context: any, info: any) {
-        return {
-          date: new Date().toISOString(),
-          message: "Ok.",
-        };
-      },
-      healthcheck(obj: any, args: any, context: any, info: any) {
-        return {
-          date: new Date().toISOString(),
-          resources: [
-            { resource: "database", up: true },
-            { resource: "cache", up: true },
-            { resource: "elasticsearch", up: true },
-            { resource: "npi-api", up: true },
-          ],
-        };
-      },
+  Query: {
+    async searchGeoProviders(obj: any, args: any, context: any, info: any) {
+      const geoOptions = {
+        latitude: 39.8707347,
+        longitude: -74.8982277,
+        distanceUnit: "miles",
+        distanceValue: 2,
+      };
+      const serviceOptions: any = {};
+      return await svc.searchGeoProviders(geoOptions, serviceOptions);
     },
-    AppPing: {
-      date(obj: any, args: any, context: any, info: any) {
-        return obj.date;
-      },
-      message(obj: any, args: any, context: any, info: any) {
-        return obj.message;
-      },
+    async autocompleteServices(obj: any, args: any, context: any, info: any) {
+      return await svc.autocompleteServices("dent");
     },
-    AppHealthCheck: {
-      date(obj: any, args: any, context: any, info: any) {
-        return obj.date;
-      },
-      resources(obj: any, args: any, context: any, info: any) {
-        return obj.resources;
-      },
+    async suggestProviders(obj: any, args: any, context: any, info: any) {
+      return await svc.suggestProviders("willi");
     },
-    AppResourceHealthReport: {
-      resource(obj: any, args: any, context: any, info: any) {
-        return obj.resource;
-      },
-      up(obj: any, args: any, context: any, info: any) {
-        return obj.up;
-      },
-    },
-  };
-  
+  },
+};

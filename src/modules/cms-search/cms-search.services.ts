@@ -31,13 +31,14 @@ const genGeoProviderQuery = (geoOptions: ts.GeoOptions, hcpcsOptions: ts.Service
     if (entityType) {
         payload.must.push({match: {entity_type: entityType}});
     }
-    if (hcpcsOptions.hcpcsCodes.length) {
+    if (hcpcsOptions && hcpcsOptions.hcpcsCodes && hcpcsOptions.hcpcsCodes.length) {
         const hcpcsSearch = hcpcsOptions.hcpcsCodes.map((item) => ({match: {"performances.hcpcs_code": item}}));
         const mustOrShould = hcpcsOptions.allServices ? "must" : "should";
         const zzz: any = {};
         zzz[`${mustOrShould}`] = hcpcsSearch;
         payload.must.push({ bool: zzz });
     }
+
     return payload;
 };
 
@@ -48,6 +49,7 @@ export const searchGeoProviders = async (
     from: number = 0,
     size: number = 10000,
 ): Promise<ts.ProviderPerformanceRecord[]> => {
+
     const geoProviderQuery = {
         query: {
             bool : genGeoProviderQuery(geoOptions, hcpcsOptions, entityType),
@@ -55,10 +57,12 @@ export const searchGeoProviders = async (
         from,
         size,
     };
+
     const searchResults = await es.search({
         index: "provider-performance",
         body: geoProviderQuery,
     });
+
     const records = searchResults.hits.hits.map((record: any) => {
         const source = record._source;
         source.performances = source.performances.map((performance: any) => {
@@ -79,9 +83,9 @@ export const searchGeoProviders = async (
         });
         return source;
     });
+
     return records;
 };
-
 
 export const autocompleteServices = async (search: string = ""): Promise<ts.ServiceSuggestion[]> => {
     const serviceAutocomplete = {
