@@ -3,10 +3,10 @@ import * as map from "./cms-db.mappers";
 import * as qry from "./cms-db.queries";
 
 const whereServiceProvider = (searchOptions: any = {
-  hcpcs: "", npi: 0,
+  hcpcs_code: "", npi: 0,
 }): ts.ServiceProviderTerms => {
     const where: ts.ServiceProviderTerms = {};
-    if ( searchOptions.hcpcs ) { where.hcpcs_code = searchOptions.hcpcs; }
+    if ( searchOptions.hcpcs_code ) { where.hcpcs_code = searchOptions.hcpcs_code; }
     if ( searchOptions.npi ) { where.npi = searchOptions.npi; }
     return where;
 };
@@ -28,7 +28,7 @@ export const providerOrganization = async (npi: number = 0): Promise<ts.Provider
 
 export const providerPerformances = async (
   searchOptions: any = {
-    hcpcs: "", npi: 0,
+    hcpcs_code: "", npi: 0,
   },
   pagination: any,
 ): Promise<ts.ProviderPerformance[]> => {
@@ -50,7 +50,7 @@ export const servicePerformance = async (hcpcs: string = "")
 
 export const serviceProviderPerformance = async (
   searchOptions: any = {
-    hcpcs: "", npi: 0,
+    hcpcs_code: "", npi: 0,
   },
   pagination: any,
 ):

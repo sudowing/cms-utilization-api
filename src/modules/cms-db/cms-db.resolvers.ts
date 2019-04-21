@@ -18,7 +18,8 @@ export const resolvers = {
     async providerPerformances(obj: any, args: any, context: any, info: any) {
       const { npi, hcpcs_code } = args.input;
       const pagination = genPaginationOrder(args.pagination);
-      return await svc.providerPerformances({ npi }, pagination); // can be called the other way
+      return await svc.providerPerformances({ npi, hcpcs_code }, pagination);
+      // can be called the other way
     },
     async service(obj: any, args: any, context: any, info: any) {
       const { hcpcs_code } = args.input;
@@ -31,7 +32,8 @@ export const resolvers = {
     async serviceProviderPerformance(obj: any, args: any, context: any, info: any) {
       const { npi, hcpcs_code } = args.input;
       const pagination = genPaginationOrder(args.pagination);
-      return await svc.serviceProviderPerformance({ hcpcs: hcpcs_code}, pagination); // can be called the other way
+      return await svc.serviceProviderPerformance({ npi, hcpcs_code }, pagination);
+      // can be called the other way
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any) {
       const { npi } = args.input;
