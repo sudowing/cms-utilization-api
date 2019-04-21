@@ -64,8 +64,9 @@ const typeDefs = gql`
     detail: ProviderDetail!
     performances(
         pagination: PaginationInput
-    ): [ProviderPerformance!]
-    countPerformances: PageCount
+    ): [ProviderPerformance!]!
+    countPerformances: PageCount!
+    performanceSummaries: [ServiceProviderPerformanceSummary!]!
 
   }
 
@@ -106,12 +107,14 @@ const typeDefs = gql`
       avg_mcare_pay_amt: Float!
       avg_mcare_standardized_amt: Float!
       prisma_id: Float!
+      service: Service
   }
 
   type Service {
       hcpcs_code: String!
       hcpcs_description: String!
       hcpcs_drug_indicator: String!
+      performance: ServicePerformance
   }
 
   type ServicePerformance {
@@ -170,6 +173,7 @@ const typeDefs = gql`
       prisma_id: Float!
   }
 
+
   type ServiceProviderPerformance {
       hcpcs_code: String!
       npi: Float!
@@ -197,6 +201,7 @@ const typeDefs = gql`
       var_avg_mcare_submitted_charge_pay_amt: Float!
       rank_var_avg_mcare_submitted_charge_pay_amt: Float!
       prisma_id: Float!
+      provider: Provider
   }
 
 
@@ -219,6 +224,7 @@ const typeDefs = gql`
       rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi: Float!
       summary_type: Float!
       prisma_id: Float!
+      provider: Provider
   }
 
 

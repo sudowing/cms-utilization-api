@@ -135,24 +135,24 @@ export interface ServiceProviderPerformance {
 
 
 export interface ServiceProviderPerformanceSummary {
-    record.npi: number;
-    record.entity_type: string;
-    record.ttl_hcpcs_code: number;
-    record.ttl_n_of_svcs: number;
-    record.est_ttl_submitted_charge_amt: number;
-    record.est_ttl_mcare_pay_amt: number;
-    record.var_est_ttl_mcare_submitted_charge_pay_amt: number;
-    record.est_ttl_mcare_pay_amt_by_ttl_hcpcs_code: number;
-    record.est_ttl_mcare_pay_amt_by_ttl_n_of_svcs: number;
-    record.rank_ttl_hcpcs_code: number;
-    record.rank_ttl_n_of_svcs: number;
-    record.rank_est_ttl_submitted_charge_amt: number;
-    record.rank_est_ttl_mcare_pay_amt: number;
-    record.rank_var_est_ttl_mcare_submitted_charge_pay_amoun: number;
-    record.rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code: number;
-    record.rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi: number;
-    record.summary_type: number;
-    record.prisma_id: number;
+    npi: number;
+    entity_type: string;
+    ttl_hcpcs_code: number;
+    ttl_n_of_svcs: number;
+    est_ttl_submitted_charge_amt: number;
+    est_ttl_mcare_pay_amt: number;
+    var_est_ttl_mcare_submitted_charge_pay_amt: number;
+    est_ttl_mcare_pay_amt_by_ttl_hcpcs_code: number;
+    est_ttl_mcare_pay_amt_by_ttl_n_of_svcs: number;
+    rank_ttl_hcpcs_code: number;
+    rank_ttl_n_of_svcs: number;
+    rank_est_ttl_submitted_charge_amt: number;
+    rank_est_ttl_mcare_pay_amt: number;
+    rank_var_est_ttl_mcare_submitted_charge_pay_amoun: number;
+    rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code: number;
+    rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi: number;
+    summary_type: number;
+    prisma_id: number;
 };
 
 
