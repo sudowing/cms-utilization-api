@@ -16,11 +16,26 @@ export const resolvers = {
       const { npis } = args.input;
       return await svc.providerOrganization(npis);
     },
+    async countProviderPerformances(obj: any, args: any, context: any, info: any): Promise<any> {
+      const { npi, hcpcs_code } = args.input;
+      const results = await svc.countProviderPerformances({ npi, hcpcs_code });
+      return { ...results[0] };
+    },
     async providerPerformances(obj: any, args: any, context: any, info: any): Promise<ts.ProviderPerformance[]> {
       const { npi, hcpcs_code } = args.input;
       const pagination = genPaginationOrder(args.pagination);
       return await svc.providerPerformances({ npi, hcpcs_code }, pagination);
-      // can be called the other way
+    },
+    async countServiceProviderPerformance(obj: any, args: any, context: any, info: any): Promise<any> {
+      const { npi, hcpcs_code } = args.input;
+      const results = await svc.countServiceProviderPerformance({ npi, hcpcs_code });
+      return { ...results[0] };
+    },
+    async serviceProviderPerformance(obj: any, args: any, context: any, info: any)
+      : Promise<ts.ServiceProviderPerformance[]> {
+      const { npi, hcpcs_code } = args.input;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.serviceProviderPerformance({ npi, hcpcs_code }, pagination);
     },
     async service(obj: any, args: any, context: any, info: any): Promise<ts.Service[]> {
       const { hcpcs_codes } = args.input;
@@ -29,13 +44,6 @@ export const resolvers = {
     async servicePerformance(obj: any, args: any, context: any, info: any): Promise<ts.ServicePerformance[]> {
       const { hcpcs_codes } = args.input;
       return await svc.servicePerformance(hcpcs_codes);
-    },
-    async serviceProviderPerformance(obj: any, args: any, context: any, info: any)
-      : Promise<ts.ServiceProviderPerformance[]> {
-      const { npi, hcpcs_code } = args.input;
-      const pagination = genPaginationOrder(args.pagination);
-      return await svc.serviceProviderPerformance({ npi, hcpcs_code }, pagination);
-      // can be called the other way
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any)
       : Promise<ts.ServiceProviderPerformanceSummary[]> {
@@ -46,17 +54,6 @@ export const resolvers = {
       : Promise<ts.ServiceProviderPerformanceSummaryType[]> {
       const { id } = args;
       return await svc.serviceProviderPerformanceSummaryType(id);
-    },
-
-    async countProviderPerformances(obj: any, args: any, context: any, info: any): Promise<any> {
-      const { npi, hcpcs_code } = args.input;
-      const results = await svc.countProviderPerformances({ npi, hcpcs_code });
-      return { ...results[0] };
-    },
-    async countServiceProviderPerformance(obj: any, args: any, context: any, info: any): Promise<any> {
-      const { npi, hcpcs_code } = args.input;
-      const results = await svc.countServiceProviderPerformance({ npi, hcpcs_code });
-      return { ...results[0] };
     },
   },
 
@@ -70,17 +67,11 @@ export const resolvers = {
       const details = await getDetails([npi]);
       return details[0];
     },
-
     async performanceSummaries(obj: ts.Provider, args: any, context: any, info: any)
       : Promise<ts.ServiceProviderPerformanceSummary[]> {
       const { npi } = obj;
       return await svc.serviceProviderPerformanceSummary([npi]);
     },
-
-
-
-
-
     async countProviderPerformance(obj: ts.Provider, args: any, context: any, info: any): Promise<any> {
       const { npi } = obj;
       const results = await svc.countProviderPerformances({ npi });
@@ -90,9 +81,7 @@ export const resolvers = {
       const { npi } = obj;
       const pagination = genPaginationOrder(args.pagination);
       return await svc.providerPerformances({ npi }, pagination);
-      // can be called the other way
     },
-
     async countServiceProviderPerformance(obj: ts.Provider, args: any, context: any, info: any): Promise<any> {
       const { npi } = obj;
       const results = await svc.countServiceProviderPerformance({ npi });
@@ -103,12 +92,8 @@ export const resolvers = {
       const { npi } = obj;
       const pagination = genPaginationOrder(args.pagination);
       return await svc.serviceProviderPerformance({ npi }, pagination);
-      // can be called the other way
     },
-
-
   },
-
   ProviderPerformance: {
     async service(obj: ts.ProviderPerformance, args: any, context: any, info: any): Promise<ts.Service> {
       const { hcpcs_code } = obj;
@@ -120,15 +105,12 @@ export const resolvers = {
       const records = await svc.provider([npi]);
       return records[0] as ts.Provider;
     },
-
   },
-
   Service: {
-    async performance(obj: ts.Service, args: any, context: any, info: any): Promise<ts.ServicePerformance[]> {
+    async servicePerformance(obj: ts.Service, args: any, context: any, info: any): Promise<ts.ServicePerformance[]> {
       const { hcpcs_code } = obj;
       return await svc.servicePerformance([hcpcs_code]);
     },
-
     async countProviderPerformance(obj: ts.Service, args: any, context: any, info: any): Promise<any> {
       const { hcpcs_code } = obj;
       const results = await svc.countProviderPerformances({ hcpcs_code });
@@ -138,9 +120,7 @@ export const resolvers = {
       const { hcpcs_code } = obj;
       const pagination = genPaginationOrder(args.pagination);
       return await svc.providerPerformances({ hcpcs_code }, pagination);
-      // can be called the other way
     },
-
     async countServiceProviderPerformance(obj: ts.Service, args: any, context: any, info: any): Promise<any> {
       const { hcpcs_code } = obj;
       const results = await svc.countServiceProviderPerformance({ hcpcs_code });
@@ -151,19 +131,8 @@ export const resolvers = {
       const { hcpcs_code } = obj;
       const pagination = genPaginationOrder(args.pagination);
       return await svc.serviceProviderPerformance({ hcpcs_code }, pagination);
-      // can be called the other way
     },
-
-
-
-
-
-
-
-
-    
   },
-
   ServiceProviderPerformance: {
     async provider(obj: ts.ServiceProviderPerformance, args: any, context: any, info: any)
       : Promise<ts.Provider> {
@@ -176,9 +145,7 @@ export const resolvers = {
       const records = await svc.service([hcpcs_code]);
       return records[0];
     },
-
   },
-
   ServiceProviderPerformanceSummary: {
     async provider(obj: ts.ServiceProviderPerformanceSummary, args: any, context: any, info: any)
       : Promise<ts.Provider> {
@@ -188,5 +155,4 @@ export const resolvers = {
     },
   },
 
-  
 };

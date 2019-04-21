@@ -35,17 +35,12 @@ const typeDefs = gql`
     serviceProviderPerformanceSummaryType(
         id: String
     ): [ServiceProviderPerformanceSummaryType!]
-
-
     countProviderPerformances(
         input: ServiceProviderTermsInput!
     ): PageCount
-
     countServiceProviderPerformance(
         input: ServiceProviderTermsInput!
     ): PageCount
-
-
   }
 
   type Provider {
@@ -60,23 +55,16 @@ const typeDefs = gql`
     address_country: String!
     address_latitude: String!
     address_longitude: String!
-    # complex
     detail: ProviderDetail!
-
     performanceSummaries: [ServiceProviderPerformanceSummary!]!
-
     countProviderPerformance: PageCount!
     providerPerformance(
         pagination: PaginationInput
     ): [ProviderPerformance!]!
-
     countServiceProviderPerformance: PageCount
     serviceProviderPerformances(
         pagination: PaginationInput
     ): [ServiceProviderPerformance!]!
-
-
-
   }
 
   type ProviderIndividual {
@@ -124,20 +112,15 @@ const typeDefs = gql`
       hcpcs_code: String!
       hcpcs_description: String!
       hcpcs_drug_indicator: String!
-      performance: [ServicePerformance!]!
-
+      servicePerformance: [ServicePerformance!]!
       countProviderPerformance: PageCount!
       providerPerformance(
         pagination: PaginationInput
       ): [ProviderPerformance!]!
-
       countServiceProviderPerformance: PageCount
       serviceProviderPerformances(
         pagination: PaginationInput
       ): [ServiceProviderPerformance!]!
-
-
-
   }
 
   type ServicePerformance {
@@ -196,7 +179,6 @@ const typeDefs = gql`
       prisma_id: Float!
   }
 
-
   type ServiceProviderPerformance {
       hcpcs_code: String!
       npi: Float!
@@ -228,7 +210,6 @@ const typeDefs = gql`
       service: Service
   }
 
-
   type ServiceProviderPerformanceSummary {
       npi: Float!
       entity_type: String!
@@ -250,7 +231,6 @@ const typeDefs = gql`
       prisma_id: Float!
       provider: Provider
   }
-
 
   type ServiceProviderPerformanceSummaryType {
       id: Float!
