@@ -27,6 +27,7 @@ const typeDefs = gql`
     ): [ServicePerformance!]
     serviceProviderPerformance(
         input: ServiceProviderTermsInput!
+        pagination: PaginationInput
     ): [ServiceProviderPerformance!]
     serviceProviderPerformanceSummary(
         input: ProviderTermsInput!

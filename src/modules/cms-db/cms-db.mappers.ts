@@ -18,9 +18,9 @@ export const providerPerformances = ((record: any): ts.ProviderPerformance => {
 
 export const servicePerformance = (record: any): ts.ServicePerformance => {
     record.providers = parseInt(record.providers, 10);
-    record.n_of_svcs = formatLongFloatString(record.n_of_svcs);
+    record.n_of_svcs = parseInt(record.n_of_svcs, 10);
     record.n_of_distinct_mcare_beneficiary_per_day_svcs
-         = formatLongFloatString(record.n_of_distinct_mcare_beneficiary_per_day_svcs);
+        = parseInt(record.n_of_distinct_mcare_beneficiary_per_day_svcs, 10);
     record.n_of_mcare_beneficiaries = formatLongFloatString(record.n_of_mcare_beneficiaries);
     record.avg_avg_mcare_pay_amt = formatLongFloatString(record.avg_avg_mcare_pay_amt);
     record.avg_avg_submitted_charge_amt = formatLongFloatString(record.avg_avg_submitted_charge_amt);

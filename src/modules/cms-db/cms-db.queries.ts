@@ -5,7 +5,7 @@ import { db } from "../../network-sources";
 const parseOrderString = (orderString: string) => {
     const chunks = orderString.split(" ");
     const ordering: any = { column: chunks[0] };
-    const directions = ['desc', 'asc'];
+    const directions = ["desc", "asc"];
     if (chunks[1] && directions.includes(chunks[1])) {
         ordering.order = chunks[1];
     }
