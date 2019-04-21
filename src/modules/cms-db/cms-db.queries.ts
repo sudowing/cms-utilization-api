@@ -55,6 +55,12 @@ export const provider_performance = (where: object, pagination: object) => {
     return paginateAndOrderQuery(query, pagination);
 };
 
+export const count_provider_performance = (where: object) => {
+    const query = db.from("cms.provider_performance as table")
+        .where(where).count();
+    return query;
+};
+
 export const service_performance = (hcpcs: string) => {
     return db.from("cms.service_performance as table")
         .where("table.hcpcs_code", hcpcs);
@@ -62,8 +68,14 @@ export const service_performance = (hcpcs: string) => {
 
 export const service_provider_performance = (where: object, pagination: object) => {
     const query = db.from("cms.service_provider_performance as table")
-        .where(where).select();
+        .where(where);
     return paginateAndOrderQuery(query, pagination);
+};
+
+export const count_service_provider_performance = (where: object) => {
+    const query = db.from("cms.service_provider_performance as table")
+        .where(where).count();
+    return query;
 };
 
 export const service_provider_performance_summary = (npi: number) => {

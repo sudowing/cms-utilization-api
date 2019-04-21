@@ -44,5 +44,17 @@ export const resolvers = {
       return await svc.serviceProviderPerformanceSummaryType(id);
     },
 
+    async countProviderPerformances(obj: any, args: any, context: any, info: any) {
+      const { npi, hcpcs_code } = args.input;
+      const results = await svc.countProviderPerformances({ npi, hcpcs_code });
+      return { ...results[0] };
+    },
+    async countServiceProviderPerformance(obj: any, args: any, context: any, info: any) {
+      const { npi, hcpcs_code } = args.input;
+      const results = await svc.countServiceProviderPerformance({ npi, hcpcs_code });
+      return { ...results[0] };
+    },
+
+
   },
 };

@@ -37,6 +37,17 @@ export const providerPerformances = async (
   return results.map(map.providerPerformances) as ts.ProviderPerformance[];
 };
 
+export const countProviderPerformances = async (
+  searchOptions: any = {
+    hcpcs_code: "", npi: 0,
+  },
+): Promise<any> => {
+  const where = whereServiceProvider(searchOptions);
+  const count: number = await qry.count_provider_performance(where);
+  return count;
+};
+
+
 export const service = async (hcpcs: string = ""): Promise<ts.Service> => {
   const results = await qry.services(hcpcs);
   return results.length ? results[0] as ts.Service : null;
@@ -58,6 +69,17 @@ export const serviceProviderPerformance = async (
   const where = whereServiceProvider(searchOptions);
   const results = await qry.service_provider_performance(where, pagination);
   return results.length ? results.map(map.serviceProviderPerformance) : null;
+};
+
+export const countServiceProviderPerformance = async (
+  searchOptions: any = {
+    hcpcs_code: "", npi: 0,
+  },
+):
+  Promise<any> => {
+  const where = whereServiceProvider(searchOptions);
+  const count: number = await qry.count_service_provider_performance(where);
+  return count;
 };
 
 export const serviceProviderPerformanceSummary = async (npi: number = 0)

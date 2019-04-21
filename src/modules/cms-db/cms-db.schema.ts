@@ -35,6 +35,17 @@ const typeDefs = gql`
     serviceProviderPerformanceSummaryType(
         id: String
     ): [ServiceProviderPerformanceSummaryType!]
+
+
+    countProviderPerformances(
+        input: ServiceProviderTermsInput!
+    ): PageCount
+
+    countServiceProviderPerformance(
+        input: ServiceProviderTermsInput!
+    ): PageCount
+
+
   }
 
   type Provider {
@@ -221,6 +232,9 @@ const typeDefs = gql`
       order: [String!]
   }
 
+  type PageCount {
+      count: Float!
+  }
 
 `;
 
