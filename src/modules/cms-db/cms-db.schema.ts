@@ -60,6 +60,13 @@ const typeDefs = gql`
     address_country: String!
     address_latitude: String!
     address_longitude: String!
+    # complex
+    detail: ProviderDetail!
+    performances(
+        pagination: PaginationInput
+    ): [ProviderPerformance!]
+    countPerformances: PageCount
+
   }
 
   type ProviderIndividual {
@@ -74,6 +81,16 @@ const typeDefs = gql`
   type ProviderOrganization {
       npi: Float!
       name: String!
+  }
+
+  type ProviderDetail {
+      npi: Float!
+      name_last: String
+      name_first: String
+      name_middle: String
+      credentials: String
+      gender: String
+      name: String
   }
 
   type ProviderPerformance {

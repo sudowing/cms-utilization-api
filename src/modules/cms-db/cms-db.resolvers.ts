@@ -58,7 +58,33 @@ export const resolvers = {
       const results = await svc.countServiceProviderPerformance({ npi, hcpcs_code });
       return { ...results[0] };
     },
+  },
+
+  Provider: {
+    async detail(obj: any, args: any, context: any, info: any)
+      : Promise<ts.ProviderIndividual|ts.ProviderOrganization> {
+      const { npi, entity_type } = obj;
+      const getDetails = entity_type === "I"
+        ? svc.providerIndividual
+        : svc.providerOrganization;
+      const details = await getDetails(npi);
+      return details[0];
+    },
+
+    async performances(obj: any, args: any, context: any, info: any): Promise<ts.ProviderPerformance[]> {
+      const { npi } = obj;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.providerPerformances({ npi }, pagination);
+      // can be called the other way
+    },
+    async countPerformances(obj: any, args: any, context: any, info: any): Promise<any> {
+      const { npi } = obj;
+      const results = await svc.countProviderPerformances({ npi });
+      return { ...results[0] };
+    },
 
 
   },
+
+
 };

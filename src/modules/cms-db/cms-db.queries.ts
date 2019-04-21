@@ -28,19 +28,19 @@ const paginateAndOrderQuery = (query: QueryBuilder, pagination: any) => {
 };
 
 export const providers = (npi: number|number[]) => {
-    const npis = Array.isArray(npi) ? npi : [];
+    const npis = Array.isArray(npi) ? npi : [npi];
     return db.from("cms.providers as table")
         .whereIn("table.npi", npis);
 };
 
 export const providers_individuals = (npi: number|number[]) => {
-    const npis = Array.isArray(npi) ? npi : [];
+    const npis = Array.isArray(npi) ? npi : [npi];
     return db.from("cms.providers_individuals as table")
         .whereIn("table.npi", npis);
 };
 
 export const providers_organizations = (npi: number|number[]) => {
-    const npis = Array.isArray(npi) ? npi : [];
+    const npis = Array.isArray(npi) ? npi : [npi];
     return db.from("cms.providers_organizations as table")
         .whereIn("table.npi", npis);
 };
@@ -80,7 +80,7 @@ export const count_service_provider_performance = (where: object) => {
 };
 
 export const service_provider_performance_summary = (npi: number|number[]) => {
-    const npis = Array.isArray(npi) ? npi : [];
+    const npis = Array.isArray(npi) ? npi : [npi];
     return db.from("cms.service_provider_performance_summary as table")
         .whereIn("table.npi", npis);
 };
