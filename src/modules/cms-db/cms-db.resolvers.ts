@@ -93,30 +93,41 @@ export const resolvers = {
   ProviderPerformance: {
     async service(obj: ts.ProviderPerformance, args: any, context: any, info: any): Promise<ts.Service> {
       const { hcpcs_code } = obj;
-      const services = await svc.service([hcpcs_code]);
-      return services[0] as ts.Service;
+      const records = await svc.service([hcpcs_code]);
+      return records[0] as ts.Service;
     },
+    async provider(obj: ts.ProviderPerformance, args: any, context: any, info: any): Promise<ts.Provider> {
+      const { npi } = obj;
+      const records = await svc.provider([npi]);
+      return records[0] as ts.Provider;
+    },
+
   },
 
   Service: {
-    async performance(obj: ts.Service, args: any, context: any, info: any): Promise<ts.ServicePerformance> {
+    async performance(obj: ts.Service, args: any, context: any, info: any): Promise<ts.ServicePerformance[]> {
       const { hcpcs_code } = obj;
-      const performances = await svc.servicePerformance([hcpcs_code]);
-      return performances[0];
-    },
-  },
-
-  ServiceProviderPerformanceSummary: {
-    async provider(obj: ts.ServiceProviderPerformanceSummary, args: any, context: any, info: any)
-      : Promise<ts.Provider> {
-      const { npi } = obj;
-      const records = await svc.provider([npi]);
-      return records[0];
+      return await svc.servicePerformance([hcpcs_code]);
     },
   },
 
   ServiceProviderPerformance: {
     async provider(obj: ts.ServiceProviderPerformance, args: any, context: any, info: any)
+      : Promise<ts.Provider> {
+      const { npi } = obj;
+      const records = await svc.provider([npi]);
+      return records[0];
+    },
+    async service(obj: ts.ServiceProviderPerformance, args: any, context: any, info: any): Promise<ts.Service> {
+      const { hcpcs_code } = obj;
+      const records = await svc.service([hcpcs_code]);
+      return records[0];
+    },
+
+  },
+
+  ServiceProviderPerformanceSummary: {
+    async provider(obj: ts.ServiceProviderPerformanceSummary, args: any, context: any, info: any)
       : Promise<ts.Provider> {
       const { npi } = obj;
       const records = await svc.provider([npi]);

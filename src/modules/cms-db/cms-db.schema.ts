@@ -108,13 +108,14 @@ const typeDefs = gql`
       avg_mcare_standardized_amt: Float!
       prisma_id: Float!
       service: Service
+      provider: Provider
   }
 
   type Service {
       hcpcs_code: String!
       hcpcs_description: String!
       hcpcs_drug_indicator: String!
-      performance: ServicePerformance
+      performance: [ServicePerformance!]!
   }
 
   type ServicePerformance {
@@ -202,6 +203,7 @@ const typeDefs = gql`
       rank_var_avg_mcare_submitted_charge_pay_amt: Float!
       prisma_id: Float!
       provider: Provider
+      service: Service
   }
 
 
