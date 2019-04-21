@@ -8,20 +8,20 @@ const typeDefs = gql`
   type Query {
     provider(
         input: ProviderTermsInput!
-    ): Provider
+    ): [Provider]
     providerIndividual(
         input: ProviderTermsInput!
-    ): ProviderIndividual
+    ): [ProviderIndividual]
     providerOrganization(
         input: ProviderTermsInput!
-    ): ProviderOrganization
+    ): [ProviderOrganization]
     providerPerformances(
         input: ServiceProviderTermsInput!
         pagination: PaginationInput
     ): [ProviderPerformance!]
     service(
         input: ServiceTermsInput!
-    ): Service
+    ): [Service]
     servicePerformance(
         input: ServiceTermsInput!
     ): [ServicePerformance!]
@@ -218,11 +218,11 @@ const typeDefs = gql`
   }
 
   input ProviderTermsInput {
-      npi: Float
+      npis: [Float!]!
   }
 
   input ServiceTermsInput {
-      hcpcs_code: String
+      hcpcs_codes: [String!]!
   }
 
 

@@ -27,27 +27,27 @@ const paginateAndOrderQuery = (query: QueryBuilder, pagination: any) => {
     return query;
 };
 
-export const providers = (npi: number) => {
+export const providers = (npi: number|number[]) => {
+    const npis = Array.isArray(npi) ? npi : [];
     return db.from("cms.providers as table")
-        .where("table.npi", npi)
-        .limit(1);
+        .whereIn("table.npi", npis);
 };
 
-export const providers_individuals = (npi: number) => {
+export const providers_individuals = (npi: number|number[]) => {
+    const npis = Array.isArray(npi) ? npi : [];
     return db.from("cms.providers_individuals as table")
-        .where("table.npi", npi)
-        .limit(1);
+        .whereIn("table.npi", npis);
 };
 
-export const providers_organizations = (npi: number) => {
+export const providers_organizations = (npi: number|number[]) => {
+    const npis = Array.isArray(npi) ? npi : [];
     return db.from("cms.providers_organizations as table")
-        .where("table.npi", npi)
-        .limit(1);
+        .whereIn("table.npi", npis);
 };
-export const services = (hcpcs: string) => {
+export const services = (hcpcs: string|string[]) => {
+    const hcpcss = Array.isArray(hcpcs) ? hcpcs : [hcpcs];
     return db.from("cms.services as table")
-        .where("table.hcpcs_code", hcpcs)
-        .limit(1);
+        .whereIn("table.hcpcs_code", hcpcss);
 };
 export const provider_performance = (where: object, pagination: object) => {
     const query = db.from("cms.provider_performance as table")
@@ -61,9 +61,10 @@ export const count_provider_performance = (where: object) => {
     return query;
 };
 
-export const service_performance = (hcpcs: string) => {
+export const service_performance = (hcpcs: string|string[]) => {
+    const hcpcss = Array.isArray(hcpcs) ? hcpcs : [hcpcs];
     return db.from("cms.service_performance as table")
-        .where("table.hcpcs_code", hcpcs);
+        .whereIn("table.hcpcs_code", hcpcss);
 };
 
 export const service_provider_performance = (where: object, pagination: object) => {
@@ -78,9 +79,10 @@ export const count_service_provider_performance = (where: object) => {
     return query;
 };
 
-export const service_provider_performance_summary = (npi: number) => {
+export const service_provider_performance_summary = (npi: number|number[]) => {
+    const npis = Array.isArray(npi) ? npi : [];
     return db.from("cms.service_provider_performance_summary as table")
-        .where("table.npi", npi);
+        .whereIn("table.npi", npis);
 };
 export const service_provider_performance_summary_type = (id: number) => {
     const query = db.from("cms.service_provider_performance_summary_type as table");

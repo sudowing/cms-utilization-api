@@ -11,19 +11,19 @@ const whereServiceProvider = (searchOptions: any = {
     return where;
 };
 
-export const provider = async (npi: number = 0): Promise<ts.Provider> => {
-  const results = await qry.providers(npi);
-  return results.length ? results[0] as ts.Provider : null;
+export const provider = async (npis: number[] = [0]): Promise<ts.Provider[]> => {
+  const results = await qry.providers(npis);
+  return results as ts.Provider[];
 };
 
-export const providerIndividual = async (npi: number = 0): Promise<ts.ProviderIndividual> => {
-  const results = await qry.providers_individuals(npi);
-  return results.length ? results[0] as ts.ProviderIndividual : null;
+export const providerIndividual = async (npis: number[] = [0]): Promise<ts.ProviderIndividual[]> => {
+  const results = await qry.providers_individuals(npis);
+  return results as ts.ProviderIndividual[];
 };
 
-export const providerOrganization = async (npi: number = 0): Promise<ts.ProviderOrganization> => {
-  const results = await qry.providers_organizations(npi);
-  return results.length ? results[0] as ts.ProviderOrganization : null;
+export const providerOrganization = async (npis: number[] = [0]): Promise<ts.ProviderOrganization[]> => {
+  const results = await qry.providers_organizations(npis);
+  return results as ts.ProviderOrganization[];
 };
 
 export const providerPerformances = async (
@@ -47,13 +47,12 @@ export const countProviderPerformances = async (
   return count;
 };
 
-
-export const service = async (hcpcs: string = ""): Promise<ts.Service> => {
-  const results = await qry.services(hcpcs);
-  return results.length ? results[0] as ts.Service : null;
+export const service = async (hcpcs: string[] = [""]): Promise<ts.Service[]> => {
+  const results: ts.Service[] = await qry.services(hcpcs);
+  return results;
 };
 
-export const servicePerformance = async (hcpcs: string = "")
+export const servicePerformance = async (hcpcs: string[] = [""])
   : Promise<ts.ServicePerformance[]> => {
   const results = await qry.service_performance(hcpcs);
   return results.length ? results.map(map.servicePerformance) : null;
@@ -82,9 +81,9 @@ export const countServiceProviderPerformance = async (
   return count;
 };
 
-export const serviceProviderPerformanceSummary = async (npi: number = 0)
+export const serviceProviderPerformanceSummary = async (npis: number[] = [0])
   : Promise<ts.ServiceProviderPerformanceSummary[]> => {
-  const results = await qry.service_provider_performance_summary(npi);
+  const results = await qry.service_provider_performance_summary(npis);
   return results.length ? results.map(map.serviceProviderPerformanceSummary) : null;
 };
 

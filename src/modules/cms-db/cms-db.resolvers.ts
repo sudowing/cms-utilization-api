@@ -4,16 +4,19 @@ import * as svc from "./cms-db.services";
 export const resolvers = {
   Query: {
     async provider(obj: any, args: any, context: any, info: any) {
-      const { npi } = args.input;
-      return await svc.provider(npi);
+      const { npis } = args.input;
+      const wip = await svc.provider(npis);
+      console.log("wip")
+      console.log(wip)
+      return wip;
     },
     async providerIndividual(obj: any, args: any, context: any, info: any) {
-      const { npi } = args.input;
-      return await svc.providerIndividual(npi);
+      const { npis } = args.input;
+      return await svc.providerIndividual(npis);
     },
     async providerOrganization(obj: any, args: any, context: any, info: any) {
-      const { npi } = args.input;
-      return await svc.providerOrganization(npi);
+      const { npis } = args.input;
+      return await svc.providerOrganization(npis);
     },
     async providerPerformances(obj: any, args: any, context: any, info: any) {
       const { npi, hcpcs_code } = args.input;
@@ -22,12 +25,12 @@ export const resolvers = {
       // can be called the other way
     },
     async service(obj: any, args: any, context: any, info: any) {
-      const { hcpcs_code } = args.input;
-      return await svc.service(hcpcs_code);
+      const { hcpcs_codes } = args.input;
+      return await svc.service(hcpcs_codes);
     },
     async servicePerformance(obj: any, args: any, context: any, info: any) {
-      const { hcpcs_code } = args.input;
-      return await svc.servicePerformance(hcpcs_code);
+      const { hcpcs_codes } = args.input;
+      return await svc.servicePerformance(hcpcs_codes);
     },
     async serviceProviderPerformance(obj: any, args: any, context: any, info: any) {
       const { npi, hcpcs_code } = args.input;
@@ -36,8 +39,8 @@ export const resolvers = {
       // can be called the other way
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any) {
-      const { npi } = args.input;
-      return await svc.serviceProviderPerformanceSummary(npi);
+      const { npis } = args.input;
+      return await svc.serviceProviderPerformanceSummary(npis);
     },
     async serviceProviderPerformanceSummaryType(obj: any, args: any, context: any, info: any) {
       const { id } = args;
