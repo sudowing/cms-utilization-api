@@ -1,34 +1,45 @@
+import { genPaginationOrder } from "../../utils";
 import * as svc from "./cms-db.services";
 
 export const resolvers = {
   Query: {
     async provider(obj: any, args: any, context: any, info: any) {
-      return await svc.provider(1003082041);
+      const { npi } = args.input;
+      return await svc.provider(npi);
     },
     async providerIndividual(obj: any, args: any, context: any, info: any) {
-      return await svc.providerIndividual(1003082041);
+      const { npi } = args.input;
+      return await svc.providerIndividual(npi);
     },
     async providerOrganization(obj: any, args: any, context: any, info: any) {
-      return await svc.providerOrganization(1003082041);
+      const { npi } = args.input;
+      return await svc.providerOrganization(npi);
     },
     async providerPerformances(obj: any, args: any, context: any, info: any) {
-      return await svc.providerPerformances({ npi: 1003082041});
+      const { npi, hcpcs_code } = args.input;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.providerPerformances({ npi }, pagination); // can be called the other way
     },
-
     async service(obj: any, args: any, context: any, info: any) {
-      return await svc.service("00120");
+      const { hcpcs_code } = args.input;
+      return await svc.service(hcpcs_code);
     },
     async servicePerformance(obj: any, args: any, context: any, info: any) {
-      return await svc.servicePerformance("0297T");
+      const { hcpcs_code } = args.input;
+      return await svc.servicePerformance(hcpcs_code);
     },
     async serviceProviderPerformance(obj: any, args: any, context: any, info: any) {
-      return await svc.serviceProviderPerformance({ hcpcs: "0297T"});
+      const { npi, hcpcs_code } = args.input;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.serviceProviderPerformance({ hcpcs: hcpcs_code}, pagination); // can be called the other way
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any) {
-      return await svc.serviceProviderPerformanceSummary(1003082041);
+      const { npi } = args.input;
+      return await svc.serviceProviderPerformanceSummary(npi);
     },
     async serviceProviderPerformanceSummaryType(obj: any, args: any, context: any, info: any) {
-      return await svc.serviceProviderPerformanceSummaryType(0);
+      const { id } = args;
+      return await svc.serviceProviderPerformanceSummaryType(id);
     },
 
   },

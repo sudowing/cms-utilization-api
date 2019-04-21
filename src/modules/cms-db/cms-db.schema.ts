@@ -6,15 +6,34 @@ import { resolvers } from "./cms-db.resolvers";
 
 const typeDefs = gql`
   type Query {
-    provider: Provider
-    providerIndividual: ProviderIndividual
-    providerOrganization: ProviderOrganization
-    providerPerformances: [ProviderPerformance!]
-    service: Service
-    servicePerformance: [ServicePerformance!]
-    serviceProviderPerformance: [ServiceProviderPerformance!]
-    serviceProviderPerformanceSummary: [ServiceProviderPerformanceSummary!]
-    serviceProviderPerformanceSummaryType: [ServiceProviderPerformanceSummaryType!]
+    provider(
+        input: ProviderTermsInput!
+    ): Provider
+    providerIndividual(
+        input: ProviderTermsInput!
+    ): ProviderIndividual
+    providerOrganization(
+        input: ProviderTermsInput!
+    ): ProviderOrganization
+    providerPerformances(
+        input: ServiceProviderTermsInput!
+        pagination: PaginationInput
+    ): [ProviderPerformance!]
+    service(
+        input: ServiceTermsInput!
+    ): Service
+    servicePerformance(
+        input: ServiceTermsInput!
+    ): [ServicePerformance!]
+    serviceProviderPerformance(
+        input: ServiceProviderTermsInput!
+    ): [ServiceProviderPerformance!]
+    serviceProviderPerformanceSummary(
+        input: ProviderTermsInput!
+    ): [ServiceProviderPerformanceSummary!]
+    serviceProviderPerformanceSummaryType(
+        id: String
+    ): [ServiceProviderPerformanceSummaryType!]
   }
 
   type Provider {
@@ -181,10 +200,26 @@ const typeDefs = gql`
       group_membership: Boolean!
   }
 
-  input ServiceProviderTerms {
+  input ServiceProviderTermsInput {
+      hcpcs_code: String
       npi: Float
+  }
+
+  input ProviderTermsInput {
+      npi: Float
+  }
+
+  input ServiceTermsInput {
       hcpcs_code: String
   }
+
+
+  input PaginationInput {
+      page: Float
+      limit: Float
+      order: String
+  }
+
 
 `;
 

@@ -26,9 +26,12 @@ export const providerOrganization = async (npi: number = 0): Promise<ts.Provider
   return results.length ? results[0] as ts.ProviderOrganization : null;
 };
 
-export const providerPerformances = async (searchOptions: any = {
-  hcpcs: "", npi: 0,
-}): Promise<ts.ProviderPerformance[]> => {
+export const providerPerformances = async (
+  searchOptions: any = {
+    hcpcs: "", npi: 0,
+  },
+  pagination: any,
+): Promise<ts.ProviderPerformance[]> => {
   const where = whereServiceProvider(searchOptions);
   const results: any = await qry.provider_performance(where);
   return results.map(map.providerPerformances) as ts.ProviderPerformance[];
@@ -45,9 +48,12 @@ export const servicePerformance = async (hcpcs: string = "")
   return results.length ? results.map(map.servicePerformance) : null;
 };
 
-export const serviceProviderPerformance = async (searchOptions: any = {
-  hcpcs: "", npi: 0,
-}):
+export const serviceProviderPerformance = async (
+  searchOptions: any = {
+    hcpcs: "", npi: 0,
+  },
+  pagination: any,
+):
   Promise<ts.ServiceProviderPerformance[]> => {
   const where = whereServiceProvider(searchOptions);
   const results = await qry.service_provider_performance(where);
