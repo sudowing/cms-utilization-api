@@ -19,10 +19,10 @@ export const resolvers = {
       return await svc.service("00120");
     },
     async servicePerformance(obj: any, args: any, context: any, info: any) {
-      return await svc.servicePerformance("00120");
+      return await svc.servicePerformance("0297T");
     },
     async serviceProviderPerformance(obj: any, args: any, context: any, info: any) {
-      return await svc.serviceProviderPerformance({ hcpcs: "00120"});
+      return await svc.serviceProviderPerformance({ hcpcs: "0297T"});
     },
     async serviceProviderPerformanceSummary(obj: any, args: any, context: any, info: any) {
       return await svc.serviceProviderPerformanceSummary(1003082041);

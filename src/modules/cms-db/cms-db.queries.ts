@@ -30,8 +30,7 @@ export const provider_performance = (where: object) => {
 
 export const service_performance = (hcpcs: string) => {
     return db.from("cms.service_performance as table")
-        .where("table.hcpcs_code", hcpcs)
-        .limit(1);
+        .where("table.hcpcs_code", hcpcs);
 };
 
 export const service_provider_performance = (where: object) => {
@@ -41,7 +40,7 @@ export const service_provider_performance = (where: object) => {
 
 export const service_provider_performance_summary = (npi: number) => {
     return db.from("cms.service_provider_performance_summary as table")
-        .where("table.npi", npi)
+        .where("table.npi", npi);
 };
 export const service_provider_performance_summary_type = (id: number) => {
     const query = db.from("cms.service_provider_performance_summary_type as table");

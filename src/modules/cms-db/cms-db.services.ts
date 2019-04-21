@@ -40,9 +40,9 @@ export const service = async (hcpcs: string = ""): Promise<ts.Service> => {
 };
 
 export const servicePerformance = async (hcpcs: string = "")
-  : Promise<ts.ServicePerformance> => {
+  : Promise<ts.ServicePerformance[]> => {
   const results = await qry.service_performance(hcpcs);
-  return results.length ? map.servicePerformance(results[0]) : null;
+  return results.length ? results.map(map.servicePerformance) : null;
 };
 
 export const serviceProviderPerformance = async (searchOptions: any = {

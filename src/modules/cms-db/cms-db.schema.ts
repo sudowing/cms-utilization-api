@@ -11,31 +11,31 @@ const typeDefs = gql`
     providerOrganization: ProviderOrganization
     providerPerformances: [ProviderPerformance!]
     service: Service
-    servicePerformance: ServicePerformance
+    servicePerformance: [ServicePerformance!]
     serviceProviderPerformance: [ServiceProviderPerformance!]
     serviceProviderPerformanceSummary: [ServiceProviderPerformanceSummary!]
     serviceProviderPerformanceSummaryType: [ServiceProviderPerformanceSummaryType!]
   }
 
   type Provider {
-      npi: Float!
-      entity_type: String!
-      provider_type: String!
-      address_street_01: String!
-      address_street_02: String!
-      address_city: String!
-      address_zip_code: String!
-      address_state: String!
-      address_country: String!
-      address_latitude: String!
-      address_longitude: String!
+    npi: Float!
+    entity_type: String!
+    provider_type: String!
+    address_street_01: String!
+    address_street_02: String
+    address_city: String!
+    address_zip_code: String!
+    address_state: String!
+    address_country: String!
+    address_latitude: String!
+    address_longitude: String!
   }
 
   type ProviderIndividual {
       npi: Float!
       name_last: String!
       name_first: String!
-      name_middle: String!
+      name_middle: String
       credentials: String!
       gender: String!
   }
