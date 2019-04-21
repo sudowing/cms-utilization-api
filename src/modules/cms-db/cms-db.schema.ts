@@ -62,11 +62,20 @@ const typeDefs = gql`
     address_longitude: String!
     # complex
     detail: ProviderDetail!
-    performances(
+
+    performanceSummaries: [ServiceProviderPerformanceSummary!]!
+
+    countProviderPerformance: PageCount!
+    providerPerformance(
         pagination: PaginationInput
     ): [ProviderPerformance!]!
-    countPerformances: PageCount!
-    performanceSummaries: [ServiceProviderPerformanceSummary!]!
+
+    countServiceProviderPerformance: PageCount
+    serviceProviderPerformances(
+        pagination: PaginationInput
+    ): [ServiceProviderPerformance!]!
+
+
 
   }
 
@@ -116,6 +125,19 @@ const typeDefs = gql`
       hcpcs_description: String!
       hcpcs_drug_indicator: String!
       performance: [ServicePerformance!]!
+
+      countProviderPerformance: PageCount!
+      providerPerformance(
+        pagination: PaginationInput
+      ): [ProviderPerformance!]!
+
+      countServiceProviderPerformance: PageCount
+      serviceProviderPerformances(
+        pagination: PaginationInput
+      ): [ServiceProviderPerformance!]!
+
+
+
   }
 
   type ServicePerformance {

@@ -71,22 +71,41 @@ export const resolvers = {
       return details[0];
     },
 
-    async performances(obj: ts.Provider, args: any, context: any, info: any): Promise<ts.ProviderPerformance[]> {
-      const { npi } = obj;
-      const pagination = genPaginationOrder(args.pagination);
-      return await svc.providerPerformances({ npi }, pagination);
-      // can be called the other way
-    },
-    async countPerformances(obj: ts.Provider, args: any, context: any, info: any): Promise<any> {
-      const { npi } = obj;
-      const results = await svc.countProviderPerformances({ npi });
-      return { ...results[0] };
-    },
     async performanceSummaries(obj: ts.Provider, args: any, context: any, info: any)
       : Promise<ts.ServiceProviderPerformanceSummary[]> {
       const { npi } = obj;
       return await svc.serviceProviderPerformanceSummary([npi]);
     },
+
+
+
+
+
+    async countProviderPerformance(obj: ts.Provider, args: any, context: any, info: any): Promise<any> {
+      const { npi } = obj;
+      const results = await svc.countProviderPerformances({ npi });
+      return { ...results[0] };
+    },
+    async providerPerformance(obj: ts.Provider, args: any, context: any, info: any): Promise<ts.ProviderPerformance[]> {
+      const { npi } = obj;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.providerPerformances({ npi }, pagination);
+      // can be called the other way
+    },
+
+    async countServiceProviderPerformance(obj: ts.Provider, args: any, context: any, info: any): Promise<any> {
+      const { npi } = obj;
+      const results = await svc.countServiceProviderPerformance({ npi });
+      return { ...results[0] };
+    },
+    async serviceProviderPerformances(obj: ts.Provider, args: any, context: any, info: any)
+      : Promise<ts.ServiceProviderPerformance[]> {
+      const { npi } = obj;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.serviceProviderPerformance({ npi }, pagination);
+      // can be called the other way
+    },
+
 
   },
 
@@ -109,6 +128,40 @@ export const resolvers = {
       const { hcpcs_code } = obj;
       return await svc.servicePerformance([hcpcs_code]);
     },
+
+    async countProviderPerformance(obj: ts.Service, args: any, context: any, info: any): Promise<any> {
+      const { hcpcs_code } = obj;
+      const results = await svc.countProviderPerformances({ hcpcs_code });
+      return { ...results[0] };
+    },
+    async providerPerformance(obj: ts.Service, args: any, context: any, info: any): Promise<ts.ProviderPerformance[]> {
+      const { hcpcs_code } = obj;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.providerPerformances({ hcpcs_code }, pagination);
+      // can be called the other way
+    },
+
+    async countServiceProviderPerformance(obj: ts.Service, args: any, context: any, info: any): Promise<any> {
+      const { hcpcs_code } = obj;
+      const results = await svc.countServiceProviderPerformance({ hcpcs_code });
+      return { ...results[0] };
+    },
+    async serviceProviderPerformances(obj: ts.Service, args: any, context: any, info: any)
+      : Promise<ts.ServiceProviderPerformance[]> {
+      const { hcpcs_code } = obj;
+      const pagination = genPaginationOrder(args.pagination);
+      return await svc.serviceProviderPerformance({ hcpcs_code }, pagination);
+      // can be called the other way
+    },
+
+
+
+
+
+
+
+
+    
   },
 
   ServiceProviderPerformance: {
