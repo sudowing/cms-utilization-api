@@ -33,7 +33,7 @@ export const providerPerformances = async (
   pagination: any,
 ): Promise<ts.ProviderPerformance[]> => {
   const where = whereServiceProvider(searchOptions);
-  const results: any = await qry.provider_performance(where);
+  const results: any = await qry.provider_performance(where, pagination);
   return results.map(map.providerPerformances) as ts.ProviderPerformance[];
 };
 
@@ -56,7 +56,7 @@ export const serviceProviderPerformance = async (
 ):
   Promise<ts.ServiceProviderPerformance[]> => {
   const where = whereServiceProvider(searchOptions);
-  const results = await qry.service_provider_performance(where);
+  const results = await qry.service_provider_performance(where, pagination);
   return results.length ? results.map(map.serviceProviderPerformance) : null;
 };
 

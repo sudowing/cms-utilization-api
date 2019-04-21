@@ -1,5 +1,31 @@
 
+import { QueryBuilder } from "knex";
 import { db } from "../../network-sources";
+
+const parseOrderString = (orderString: string) => {
+    const chunks = orderString.split(" ");
+    const ordering: any = { column: chunks[0] };
+    const directions = ['desc', 'asc'];
+    if (chunks[1] && directions.includes(chunks[1])) {
+        ordering.order = chunks[1];
+    }
+    return ordering;
+};
+
+const paginateAndOrderQuery = (query: QueryBuilder, pagination: any) => {
+    const { limit, offset, order} = pagination;
+    if (limit) {
+        query.limit(limit);
+    }
+    if (offset) {
+        query.offset(offset);
+    }
+    if (order) {
+        const orderBy = order.map(parseOrderString);
+        query.orderBy(orderBy);
+    }
+    return query;
+};
 
 export const providers = (npi: number) => {
     return db.from("cms.providers as table")
@@ -23,9 +49,10 @@ export const services = (hcpcs: string) => {
         .where("table.hcpcs_code", hcpcs)
         .limit(1);
 };
-export const provider_performance = (where: object) => {
-    return db.from("cms.provider_performance as table")
+export const provider_performance = (where: object, pagination: object) => {
+    const query = db.from("cms.provider_performance as table")
         .where(where);
+    return paginateAndOrderQuery(query, pagination);
 };
 
 export const service_performance = (hcpcs: string) => {
@@ -33,9 +60,10 @@ export const service_performance = (hcpcs: string) => {
         .where("table.hcpcs_code", hcpcs);
 };
 
-export const service_provider_performance = (where: object) => {
-    return db.from("cms.service_provider_performance as table")
+export const service_provider_performance = (where: object, pagination: object) => {
+    const query = db.from("cms.service_provider_performance as table")
         .where(where).select();
+    return paginateAndOrderQuery(query, pagination);
 };
 
 export const service_provider_performance_summary = (npi: number) => {

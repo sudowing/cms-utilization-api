@@ -217,7 +217,7 @@ const typeDefs = gql`
   input PaginationInput {
       page: Float
       limit: Float
-      order: String
+      order: [String!]
   }
 
 
