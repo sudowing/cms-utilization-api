@@ -13,8 +13,7 @@ const providerPerformance = async (ctx: Context) => {
 
     if (
         (
-            !geo.latitude ||
-            !geo.longitude ||
+            !geo.location ||
             !geo.distanceValue
         )
         &&
@@ -30,9 +29,12 @@ const providerPerformance = async (ctx: Context) => {
         };
     }
 
+    const { lat, lon } = geo.location || { lat: null, lon: null};
+
     const geoOptions: ts.GeoOptions = {
-        latitude: geo.latitude || null,
-        longitude: geo.longitude || null,
+        location: {
+            lat, lon,
+        },
         distanceUnit: geo.distanceUnit || "miles",
         distanceValue: geo.distanceValue,
         top_left: geo.top_left || null,

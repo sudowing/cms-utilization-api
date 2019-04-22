@@ -4,12 +4,11 @@ export interface SearchOptions {
 };
 
 export interface GeoOptions {
-    latitude?: number;
-    longitude?: number;
+    location?: ProviderPerformanceLocation;
     distanceUnit?: string;
     distanceValue?: number;
-    top_left?: any;
-    bottom_right?: any;
+    top_left?: ProviderPerformanceLocation;
+    bottom_right?: ProviderPerformanceLocation;
 };
 
 export interface ServiceOptions {

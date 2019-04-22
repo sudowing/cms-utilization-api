@@ -23,17 +23,21 @@ const typeDefs = gql`
   }
 
   input GeoOptions {
-    latitude: Float
-    longitude: Float
+    location: GeoLocationInput
     distanceUnit: String
     distanceValue: Float
-    top_left: String
-    bottom_right: String
+    top_left: GeoLocationInput
+    bottom_right: GeoLocationInput
   }
 
   input ServiceOptions {
       hcpcsCodes: [String]
       allServices: Boolean
+  }
+
+  input GeoLocationInput {
+      lat: Float!
+      lon: Float!
   }
 
   type ServiceSuggestion {

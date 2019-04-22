@@ -2,6 +2,23 @@ import { elasticsearch as es } from "../../network-sources";
 import * as ts from "./cms-search.interfaces";
 import * as map from "./cms-search.mappers";
 
+const formatPerformance = (performance: any) => {
+    const {
+        rank_n_of_svcs,
+        rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
+        rank_n_of_mcare_beneficiaries,
+        rank_avg_mcare_standardized_amt,
+        rank_avg_mcare_allowed_amt,
+        rank_avg_submitted_charge_amt,
+        rank_avg_mcare_pay_amt,
+        rank_est_ttl_mcare_pay_amt,
+        rank_est_ttl_submitted_charge_amt,
+        rank_var_avg_mcare_submitted_charge_pay_amt,
+        ...remaining
+    } = performance;
+    return map.providerPerformanceRecord(remaining);
+};
+
 const genGeoProviderQuery = (
     geoOptions: ts.GeoOptions,
     hcpcsOptions: ts.ServiceOptions,
@@ -23,12 +40,15 @@ const genGeoProviderQuery = (
             geo_distance: {
                 distance: `${geoOptions.distanceValue}${geoOptions.distanceUnit}`,
                 location: {
-                    lat: geoOptions.latitude,
-                    lon: geoOptions.longitude,
+                    lat: geoOptions.location.lat,
+                    lon: geoOptions.location.lon,
                 },
             },
         };
     }
+
+    console.log('geoFilter: ', geoFilter)
+
 
     payload.filter = geoFilter;
     payload.must = [];
@@ -62,6 +82,12 @@ export const searchGeoProviders = async (
         size: limit,
     };
 
+    console.log('geoProviderQuery: ')
+    console.log(JSON.stringify(geoProviderQuery))
+
+
+    
+
     const searchResults = await es.search({
         index: "provider-performance",
         body: geoProviderQuery,
@@ -69,22 +95,19 @@ export const searchGeoProviders = async (
 
     const records = searchResults.hits.hits.map((record: any) => {
         const source = record._source;
-        source.performances = source.performances.map((performance: any) => {
-            const {
-                rank_n_of_svcs,
-                rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
-                rank_n_of_mcare_beneficiaries,
-                rank_avg_mcare_standardized_amt,
-                rank_avg_mcare_allowed_amt,
-                rank_avg_submitted_charge_amt,
-                rank_avg_mcare_pay_amt,
-                rank_est_ttl_mcare_pay_amt,
-                rank_est_ttl_submitted_charge_amt,
-                rank_var_avg_mcare_submitted_charge_pay_amt,
-                ...remaining
-            } = performance;
-            return map.providerPerformanceRecord(remaining);
-        });
+        source.performances = source.performances.reduce((accum: any[], curr: any) => {
+            // if they search using hcpcs, only return relevant performance records
+            if (hcpcsOptions && hcpcsOptions.hcpcsCodes) {
+                if (hcpcsOptions.hcpcsCodes.includes(curr.hcpcs_code)) {
+                    accum.push(formatPerformance(curr));
+                }
+            // else send it all
+            } else {
+                accum.push(formatPerformance(curr));
+            }
+            return accum;
+        }, []);
+
         return source;
     });
 

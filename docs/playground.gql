@@ -1,22 +1,20 @@
 {
 
-  
-  
   searchGeoProviders(
     geo: {
       latitude: 39.8707347,
       longitude: -74.8982277,
       distanceUnit: "miles",
-      distanceValue: 1.8,
+      distanceValue: 8,
     },
     service: {
       hcpcsCodes: [
-        "99204",
-        "31623",
+        "99213",
+        "J2357"
       ],
-      allServices: true,
+      allServices: false,
     }
-    limit: 3
+    limit: 33
   ){
     npi
     entity_type
@@ -40,7 +38,6 @@
       place_of_service
       var_avg_mcare_submitted_charge_pay_amt
     }
-
   
   }
   suggestProviders(
@@ -57,7 +54,7 @@
   }
   
   autocompleteServices(
-    search: "tissue",
+    search: "High osmolar contrast material",
     limit: 3
   ){
     hcpcs_code
@@ -65,7 +62,4 @@
     
   }
   
-
-
-
 }
