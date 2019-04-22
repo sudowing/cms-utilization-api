@@ -6,7 +6,7 @@ import { resolvers } from "./npi-registry.resolvers";
 
 const typeDefs = gql`
   type Query {
-    getProvider: RegistryProfile
+    getProvider(npi: Float!): RegistryProfile
   }
   type RegistryProfileAddress {
     country_code: String!
@@ -65,6 +65,7 @@ const typeDefs = gql`
       taxonomies: [RegistryProfileTaxonomy]
       identifiers: [RegistryProfileIdentifier]
   }
+
 `;
 
 export const AppModule: GraphQLModule = new GraphQLModule({
