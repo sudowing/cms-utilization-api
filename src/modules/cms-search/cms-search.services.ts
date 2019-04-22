@@ -47,9 +47,6 @@ const genGeoProviderQuery = (
         };
     }
 
-    console.log('geoFilter: ', geoFilter)
-
-
     payload.filter = geoFilter;
     payload.must = [];
     if (entityType && (entityType === "I" || entityType === "O")) {
@@ -81,12 +78,6 @@ export const searchGeoProviders = async (
         from: offset,
         size: limit,
     };
-
-    console.log('geoProviderQuery: ')
-    console.log(JSON.stringify(geoProviderQuery))
-
-
-    
 
     const searchResults = await es.search({
         index: "provider-performance",
