@@ -6,9 +6,20 @@ import { resolvers } from "./cms-search.resolvers";
 
 const typeDefs = gql`
   type Query {
-    searchGeoProviders: [ProviderPerformanceRecord!]
-    autocompleteServices: [ServiceSuggestion!]
-    suggestProviders: [ProviderSuggestion!]
+    searchGeoProviders(
+      geo: GeoOptions!
+      service: ServiceOptions
+      limit: Int
+      entity_type: Int
+    ): [ProviderPerformanceRecord!]
+    autocompleteServices(
+      search: String!,
+      limit: Int
+    ): [ServiceSuggestion!]
+    suggestProviders(
+      search: String!,
+      limit: Int
+    ): [ProviderSuggestion!]
   }
 
   input GeoOptions {

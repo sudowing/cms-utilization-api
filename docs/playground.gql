@@ -1,584 +1,71 @@
 {
-  providerIndividual(input:{
-    npis: [
-      1003082041
-    ]
-  }){
-    npi
-    name_last
-    name_first
-    name_middle
-    credentials
-    gender
-  }
 
-  providerOrganization(input:{
-    npis: [
-      1003010208
-    ]
-  }){
-    npi
-    name
-  }
-
-
-  countProviderPerformances(
-    input:{
-      npi: 1003010208
-      # hcpcs_code: "G0008"
-    }
-  ){
-    count
-  }
   
-  providerPerformances(
-    input:{
-      npi: 1003010208
-      # hcpcs_code: "G0008"
+  
+  searchGeoProviders(
+    geo: {
+      latitude: 39.8707347,
+      longitude: -74.8982277,
+      distanceUnit: "miles",
+      distanceValue: 1.8,
     },
-    pagination: {
-      limit: 3,
-      page: 1,
-      order: [
-        "n_of_svcs desc"
-      ]
+    service: {
+      hcpcsCodes: [
+        "99204",
+        "31623",
+      ],
+      allServices: true,
     }
+    limit: 3
   ){
     npi
-    mcare_participation_indicator
-    place_of_service
-    hcpcs_code
-    n_of_svcs
-    n_of_mcare_beneficiaries
-    n_of_distinct_mcare_beneficiary_per_day_svcs
-    avg_mcare_allowed_amt
-    avg_submitted_charge_amt
-    avg_mcare_pay_amt
-    avg_mcare_standardized_amt
-    prisma_id
-    service{
+    entity_type
+    location{
+      lat
+      lon
+    }
+    performances{
+      npi
       hcpcs_code
-      hcpcs_description
-      hcpcs_drug_indicator
-    }
-    provider{
-      npi
-      entity_type
-      provider_type
-    }
-  }
-  
-  
-  
-  serviceProviderPerformanceSummary(input:{
-    npis: [
-      1003082041
-    ]
-  }){
-    npi
-    entity_type
-    ttl_hcpcs_code
-    ttl_n_of_svcs
-    est_ttl_submitted_charge_amt
-    est_ttl_mcare_pay_amt
-    var_est_ttl_mcare_submitted_charge_pay_amt
-    est_ttl_mcare_pay_amt_by_ttl_hcpcs_code
-    est_ttl_mcare_pay_amt_by_ttl_n_of_svcs
-    rank_ttl_hcpcs_code
-    rank_ttl_n_of_svcs
-    rank_est_ttl_submitted_charge_amt
-    rank_est_ttl_mcare_pay_amt
-    rank_var_est_ttl_mcare_submitted_charge_pay_amoun
-    rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code
-    rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi
-    summary_type
-    prisma_id
-    provider{
-      npi
-      entity_type
-      provider_type
-      address_street_01
-      address_street_02
-      address_city
-      address_zip_code
-      address_state
-      address_country
-      address_latitude
-      address_longitude
-    }
-  }
-  
-  serviceProviderPerformanceSummaryType{
-    id
-    slug
-    description
-    group_membership
-  }
-
-
-
-
-
-  countServiceProviderPerformance(
-    input:{
-      npi: 1003010208
-      # hcpcs_code: "G0008"
-    }
-  ){
-    count
-  }
-
-  serviceProviderPerformance(
-    input:{
-      npi: 1003010208,
-      # hcpcs_code: "G0008"
-    },
-    pagination: {
-      limit: 8,
-      page: 1,
-      order: [
-        "n_of_svcs desc"
-      ]
-    }
-  ){
-    hcpcs_code
-    npi
-    entity_type
-    n_of_svcs
-    n_of_distinct_mcare_beneficiary_per_day_svcs
-    n_of_mcare_beneficiaries
-    avg_mcare_pay_amt
-    avg_submitted_charge_amt
-    avg_mcare_allowed_amt
-    avg_mcare_standardized_amt
-    est_ttl_mcare_pay_amt
-    est_ttl_submitted_charge_amt
-    rank_n_of_svcs
-    rank_n_of_distinct_mcare_beneficiary_per_day_svcs
-    rank_n_of_mcare_beneficiaries
-    rank_avg_mcare_standardized_amt
-    rank_avg_mcare_allowed_amt
-    rank_avg_submitted_charge_amt
-    rank_avg_mcare_pay_amt
-    rank_est_ttl_mcare_pay_amt
-    rank_est_ttl_submitted_charge_amt
-    mcare_participation_indicator
-    place_of_service
-    var_avg_mcare_submitted_charge_pay_amt
-    rank_var_avg_mcare_submitted_charge_pay_amt
-    prisma_id
-    provider{
-      npi
-      entity_type
-      provider_type
-      address_street_01
-      address_street_02
-      address_city
-      address_zip_code
-      address_state
-      address_country
-      address_latitude
-      address_longitude
-    }
-    service{
-      hcpcs_code
-      hcpcs_description
-      hcpcs_drug_indicator
-    }
-    
-  }
-  
-  
-
-
-
-
-  servicePerformance(input:{
-    hcpcs_codes: [
-  "G0008"
-    ]
-  }){
-    hcpcs_code
-    entity_type
-    providers
-    n_of_svcs
-    n_of_distinct_mcare_beneficiary_per_day_svcs
-    n_of_mcare_beneficiaries
-    avg_avg_mcare_pay_amt
-    avg_avg_submitted_charge_amt
-    avg_avg_mcare_allowed_amt
-    avg_avg_mcare_standardized_amt
-    min_avg_mcare_pay_amt
-    max_avg_mcare_pay_amt
-    var_avg_mcare_pay_amt
-    min_avg_mcare_allowed_amt
-    max_avg_mcare_allowed_amt
-    var_avg_mcare_allowed_amt
-    min_avg_submitted_charge_amt
-    max_avg_submitted_charge_amt
-    var_avg_submitted_charge_amt
-    min_avg_mcare_standardized_amt
-    max_avg_mcare_standardized_amt
-    var_avg_mcare_standardized_amt
-    est_ttl_mcare_pay_amt
-    est_ttl_submitted_charge_amt
-    est_ttl_mcare_allowed_amt
-    est_ttl_mcare_standardized_amt
-    rank_providers
-    rank_n_of_svcs
-    rank_n_of_distinct_mcare_beneficiary_per_day_svcs
-    rank_n_of_mcare_beneficiaries
-    rank_avg_avg_mcare_pay_amt
-    rank_avg_avg_submitted_charge_amt
-    rank_avg_avg_mcare_allowed_amt
-    rank_avg_avg_mcare_standardized_amt
-    rank_min_avg_mcare_pay_amt
-    rank_max_avg_mcare_pay_amt
-    rank_var_avg_mcare_pay_amt
-    rank_min_avg_mcare_allowed_amt
-    rank_max_avg_mcare_allowed_amt
-    rank_var_avg_mcare_allowed_amt
-    rank_min_avg_submitted_charge_amt
-    rank_max_avg_submitted_charge_amt
-    rank_var_avg_submitted_charge_amt
-    rank_min_avg_mcare_standardized_amt
-    rank_max_avg_mcare_standardized_amt
-    rank_var_avg_mcare_standardized_amt
-    rank_est_ttl_mcare_pay_amt
-    rank_est_ttl_submitted_charge_amt
-    rank_est_ttl_mcare_allowed_amt
-    rank_est_ttl_mcare_standardized_amt
-    var_avg_mcare_submitted_charge_pay_amt
-    rank_var_avg_mcare_submitted_charge_pay_amt
-    prisma_id  
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  service(input:{
-    hcpcs_codes: [
-  "G0008"
-    ]
-  }){
-      hcpcs_code
-      hcpcs_description
-      hcpcs_drug_indicator
-
-      servicePerformance{
-        hcpcs_code
-        entity_type
-        providers
-        n_of_svcs
-        n_of_distinct_mcare_beneficiary_per_day_svcs
-        n_of_mcare_beneficiaries
-        avg_avg_mcare_pay_amt
-        avg_avg_submitted_charge_amt
-        avg_avg_mcare_allowed_amt
-        avg_avg_mcare_standardized_amt
-        min_avg_mcare_pay_amt
-        max_avg_mcare_pay_amt
-        var_avg_mcare_pay_amt
-        min_avg_mcare_allowed_amt
-        max_avg_mcare_allowed_amt
-        var_avg_mcare_allowed_amt
-        min_avg_submitted_charge_amt
-        max_avg_submitted_charge_amt
-        var_avg_submitted_charge_amt
-        min_avg_mcare_standardized_amt
-        max_avg_mcare_standardized_amt
-        var_avg_mcare_standardized_amt
-        est_ttl_mcare_pay_amt
-        est_ttl_submitted_charge_amt
-        est_ttl_mcare_allowed_amt
-        est_ttl_mcare_standardized_amt
-        rank_providers
-        rank_n_of_svcs
-        rank_n_of_distinct_mcare_beneficiary_per_day_svcs
-        rank_n_of_mcare_beneficiaries
-        rank_avg_avg_mcare_pay_amt
-        rank_avg_avg_submitted_charge_amt
-        rank_avg_avg_mcare_allowed_amt
-        rank_avg_avg_mcare_standardized_amt
-        rank_min_avg_mcare_pay_amt
-        rank_max_avg_mcare_pay_amt
-        rank_var_avg_mcare_pay_amt
-        rank_min_avg_mcare_allowed_amt
-        rank_max_avg_mcare_allowed_amt
-        rank_var_avg_mcare_allowed_amt
-        rank_min_avg_submitted_charge_amt
-        rank_max_avg_submitted_charge_amt
-        rank_var_avg_submitted_charge_amt
-        rank_min_avg_mcare_standardized_amt
-        rank_max_avg_mcare_standardized_amt
-        rank_var_avg_mcare_standardized_amt
-        rank_est_ttl_mcare_pay_amt
-        rank_est_ttl_submitted_charge_amt
-        rank_est_ttl_mcare_allowed_amt
-        rank_est_ttl_mcare_standardized_amt
-        var_avg_mcare_submitted_charge_pay_amt
-        rank_var_avg_mcare_submitted_charge_pay_amt
-        prisma_id  
-    }
-    
-      countProviderPerformance{
-        count
-      }
-      providerPerformance(
-        pagination: {
-          limit: 5,
-          page: 1,
-          order: [
-            "n_of_svcs desc"
-          ]
-        }
-      ){
-        npi
-        mcare_participation_indicator
-        place_of_service
-        hcpcs_code
-        n_of_svcs
-        n_of_mcare_beneficiaries
-        n_of_distinct_mcare_beneficiary_per_day_svcs
-        avg_mcare_allowed_amt
-        avg_submitted_charge_amt
-        avg_mcare_pay_amt
-        avg_mcare_standardized_amt
-        prisma_id
-        provider{
-          npi
-          entity_type
-          provider_type
-          address_street_01
-          address_street_02
-          address_city
-          address_zip_code
-          address_state
-          address_country
-          address_latitude
-          address_longitude
-        }
-
-      }
-
-
-      countServiceProviderPerformance{
-        count
-      }
-      serviceProviderPerformances(
-        pagination: {
-          limit: 5,
-          page: 3,
-          order: [
-            "n_of_svcs desc"
-          ]
-        }
-      ){
-        hcpcs_code
-        npi
-        entity_type
-        n_of_svcs
-        n_of_distinct_mcare_beneficiary_per_day_svcs
-        n_of_mcare_beneficiaries
-        avg_mcare_pay_amt
-        avg_submitted_charge_amt
-        avg_mcare_allowed_amt
-        avg_mcare_standardized_amt
-        est_ttl_mcare_pay_amt
-        est_ttl_submitted_charge_amt
-        rank_n_of_svcs
-        rank_n_of_distinct_mcare_beneficiary_per_day_svcs
-        rank_n_of_mcare_beneficiaries
-        rank_avg_mcare_standardized_amt
-        rank_avg_mcare_allowed_amt
-        rank_avg_submitted_charge_amt
-        rank_avg_mcare_pay_amt
-        rank_est_ttl_mcare_pay_amt
-        rank_est_ttl_submitted_charge_amt
-        mcare_participation_indicator
-        place_of_service
-        var_avg_mcare_submitted_charge_pay_amt
-        rank_var_avg_mcare_submitted_charge_pay_amt
-        prisma_id
-        provider{
-          npi
-          entity_type
-          provider_type
-          address_street_01
-          address_street_02
-          address_city
-          address_zip_code
-          address_state
-          address_country
-          address_latitude
-          address_longitude
-        }
-      }
-    
-  }
-  
-  
-
-
-
-  provider(input:{
-    npis: [
-      1003082041
-    ]
-  }){
-    npi
-    entity_type
-    provider_type
-    address_street_01
-    address_street_02
-    address_city
-    address_zip_code
-    address_state
-    address_country
-    address_latitude
-    address_longitude
-    detail{
-      npi
-      name_last
-      name_first
-      name_middle
-      credentials
-      gender
-      name
-    }
-
-    performanceSummaries{
-      npi
-      entity_type
-      ttl_hcpcs_code
-      ttl_n_of_svcs
-      est_ttl_submitted_charge_amt
+      n_of_svcs
+      n_of_distinct_mcare_beneficiary_per_day_svcs
+      n_of_mcare_beneficiaries
+      avg_mcare_pay_amt
+      avg_submitted_charge_amt
+      avg_mcare_allowed_amt
+      avg_mcare_standardized_amt
       est_ttl_mcare_pay_amt
-      var_est_ttl_mcare_submitted_charge_pay_amt
-      est_ttl_mcare_pay_amt_by_ttl_hcpcs_code
-      est_ttl_mcare_pay_amt_by_ttl_n_of_svcs
-      rank_ttl_hcpcs_code
-      rank_ttl_n_of_svcs
-      rank_est_ttl_submitted_charge_amt
-      rank_est_ttl_mcare_pay_amt
-      rank_var_est_ttl_mcare_submitted_charge_pay_amoun
-      rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code
-      rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi
-      summary_type
-      prisma_id
+      est_ttl_submitted_charge_amt
+      mcare_participation_indicator
+      place_of_service
+      var_avg_mcare_submitted_charge_pay_amt
     }
-    
-    
-    
-    
-      countProviderPerformance{
-        count
-      }
-      providerPerformance(
-        pagination: {
-          limit: 5,
-          page: 1,
-          order: [
-            "n_of_svcs desc"
-          ]
-        }
-      ){
-        npi
-        mcare_participation_indicator
-        place_of_service
-        hcpcs_code
-        n_of_svcs
-        n_of_mcare_beneficiaries
-        n_of_distinct_mcare_beneficiary_per_day_svcs
-        avg_mcare_allowed_amt
-        avg_submitted_charge_amt
-        avg_mcare_pay_amt
-        avg_mcare_standardized_amt
-        prisma_id
-        provider{
-          npi
-          entity_type
-          provider_type
-          address_street_01
-          address_street_02
-          address_city
-          address_zip_code
-          address_state
-          address_country
-          address_latitude
-          address_longitude
-        }
-
-      }
-
-
-      countServiceProviderPerformance{
-        count
-      }
-      serviceProviderPerformances(
-        pagination: {
-          limit: 5,
-          page: 3,
-          order: [
-            "n_of_svcs desc"
-          ]
-        }
-      ){
-        hcpcs_code
-        npi
-        entity_type
-        n_of_svcs
-        n_of_distinct_mcare_beneficiary_per_day_svcs
-        n_of_mcare_beneficiaries
-        avg_mcare_pay_amt
-        avg_submitted_charge_amt
-        avg_mcare_allowed_amt
-        avg_mcare_standardized_amt
-        est_ttl_mcare_pay_amt
-        est_ttl_submitted_charge_amt
-        rank_n_of_svcs
-        rank_n_of_distinct_mcare_beneficiary_per_day_svcs
-        rank_n_of_mcare_beneficiaries
-        rank_avg_mcare_standardized_amt
-        rank_avg_mcare_allowed_amt
-        rank_avg_submitted_charge_amt
-        rank_avg_mcare_pay_amt
-        rank_est_ttl_mcare_pay_amt
-        rank_est_ttl_submitted_charge_amt
-        mcare_participation_indicator
-        place_of_service
-        var_avg_mcare_submitted_charge_pay_amt
-        rank_var_avg_mcare_submitted_charge_pay_amt
-        prisma_id
-        provider{
-          npi
-          entity_type
-          provider_type
-          address_street_01
-          address_street_02
-          address_city
-          address_zip_code
-          address_state
-          address_country
-          address_latitude
-          address_longitude
-        }
-      }
-        
-  }
 
   
+  }
+  suggestProviders(
+    search: "marco",
+    limit: 2
+  ){
+    npi
+    entity_type
+    address_city
+    address_state
+    gender
+    name_first
+    name_last
+  }
+  
+  autocompleteServices(
+    search: "tissue",
+    limit: 3
+  ){
+    hcpcs_code
+    hcpcs_description
+    
+  }
+  
+
+
 
 }

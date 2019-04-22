@@ -3,20 +3,17 @@ import * as svc from "./cms-search.services";
 export const resolvers = {
   Query: {
     async searchGeoProviders(obj: any, args: any, context: any, info: any) {
-      const geoOptions = {
-        latitude: 39.8707347,
-        longitude: -74.8982277,
-        distanceUnit: "miles",
-        distanceValue: 2,
-      };
-      const serviceOptions: any = {};
-      return await svc.searchGeoProviders(geoOptions, serviceOptions);
+      const { geo, service, entity_type, limit } = args;
+      const newLimit = limit || 10000;
+      return await svc.searchGeoProviders(geo, service, entity_type, newLimit);
     },
     async autocompleteServices(obj: any, args: any, context: any, info: any) {
-      return await svc.autocompleteServices("dent");
+      const { search, limit } = args;
+      return await svc.autocompleteServices(search, limit);
     },
     async suggestProviders(obj: any, args: any, context: any, info: any) {
-      return await svc.suggestProviders("willi");
+      const { search, limit } = args;
+      return await svc.suggestProviders(search, limit);
     },
   },
 };
