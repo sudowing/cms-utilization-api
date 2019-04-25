@@ -10,7 +10,7 @@ const typeDefs = gql`
       geo: GeoOptions!
       service: ServiceOptions
       limit: Int
-      entity_type: Int
+      entity_type: String
     ): [ProviderPerformanceRecord!]
     autocompleteServices(
       search: String!,
