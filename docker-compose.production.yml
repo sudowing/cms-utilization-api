@@ -21,7 +21,7 @@ services:
     environment:
       discovery.type: single-node
   cms-utilization-api:
-    image: sudowing/cms-utilization-api:develop
+    image: sudowing/cms-utilization-api:latest
     ports:
       - "8080:8080"
     depends_on:
