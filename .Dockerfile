@@ -30,3 +30,5 @@ COPY src src
 
 RUN node_modules/.bin/tsc \
   && chown -R cms-utilization-api:cms-utilization-api $HOME/*
+
+RUN rm -R src

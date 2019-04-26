@@ -20,3 +20,19 @@ services:
       - ./volumes/elastic:/usr/share/elasticsearch/data
     environment:
       discovery.type: single-node
+  cms-utilization-api:
+    image: sudowing/cms-utilization-api:develop
+    ports:
+      - "8042:8042"
+    depends_on:
+    - cms-utilization-db
+    - cms-utilization-search
+    env_file:
+      - './.env'
+    environment:
+      DB_HOST: cms-utilization-db     
+      DB_PORT: 5434
+      ES_HOST: cms-utilization-search     
+      ES_PORT: 9200
+    volumes:
+      - ./volumes/logs/api:/var/logs/api
