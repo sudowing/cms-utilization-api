@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const settings = {
-    port: process.env.API_USER || 8080,
+    port: 8080,
     urlRoot: process.env.API_GRAPHQL_ROUTE || '/graph',
     debug: true,
     db: {

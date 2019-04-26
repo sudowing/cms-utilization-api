@@ -23,7 +23,7 @@ services:
   cms-utilization-api:
     image: sudowing/cms-utilization-api:develop
     ports:
-      - "8042:8042"
+      - "8080:8080"
     depends_on:
     - cms-utilization-db
     - cms-utilization-search
