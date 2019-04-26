@@ -9,7 +9,7 @@ const { user, password, host, port, database } = dbConfig;
 const elasticConfig: any = config.get("elastic");
 const { host: esHost, port: esPort } = elasticConfig;
 
-const dbUrl = `${user}:${password}@${host}:${port}/${database}`;
+const dbUrl = `postgres://${user}:${password}@${host}:${port}/${database}`;
 
 export const db = knex({ client: "pg", connection: dbUrl });
 

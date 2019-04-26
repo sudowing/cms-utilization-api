@@ -31,7 +31,7 @@ services:
       - './.env'
     environment:
       DB_HOST: cms-utilization-db     
-      DB_PORT: 5434
+      DB_PORT: 5432
       ES_HOST: cms-utilization-search     
       ES_PORT: 9200
     volumes:
