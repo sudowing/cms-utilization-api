@@ -1,6 +1,6 @@
 import { GraphQLModule } from "@graphql-modules/core";
-import { AppModule } from "./modules/index";
+import { apiModule, AppModule, dbModule, searchModule } from "./modules/index";
 
 export const RootModule = new GraphQLModule({
-  imports: [AppModule]
+  imports: [AppModule, dbModule, apiModule, searchModule],
 });

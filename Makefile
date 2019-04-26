@@ -6,7 +6,7 @@ PWD = $(shell pwd)
 ES_SERVICE = "http://localhost:9200"
 
 build:
-	docker build --pull -t $(CONTAINER_DEV_IMAGE) -f docker/Dockerfile .
+	docker build --pull -t $(CONTAINER_DEV_IMAGE) -f ./.Dockerfile .
 
 release:
 	make build
@@ -19,17 +19,17 @@ publish:
 	# docker push sudowing/cms-utilization-api:1.1.0
 	docker push sudowing/cms-utilization-api:latest
 
-run:
-	@docker-compose -f docker-compose.yml -f docker-compose.development.yml up
-
 start:
-	@docker-compose -f docker-compose.yml up -d
+	@docker-compose -f docker-compose.yml -f docker-compose.production.yml -d
+
+run:
+	@docker-compose -f docker-compose.yml up
 
 stop:
 	@docker-compose stop
 
 clean:
-	@docker-compose -f docker-compose.yml down --remove-orphan
+	@docker-compose -f docker-compose.yml -f docker-compose.production.yml down --remove-orphan
 
 seed:
 	docker run \
