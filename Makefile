@@ -20,7 +20,7 @@ publish:
 	docker push sudowing/cms-utilization-api:latest
 
 start:
-	@docker-compose -f docker-compose.yml -f docker-compose.production.yml -d
+	@docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
 
 run:
 	@docker-compose -f docker-compose.yml up
