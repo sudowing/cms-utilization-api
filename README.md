@@ -20,12 +20,6 @@ The __[NPI Registry](https://npiregistry.cms.hhs.gov/)__, is a goverment API tha
 * [Quick Start](#quick-start)
 * [API Documentation](#api-documentation)
 * [Development](#development)
-  * [Run Service](#dev-run-Service)
-  * [Container Maintenance](#dev-container-maintenance)
-  * [Generate DB Export](#dev-generate-db-export)
-  * [Restore DB from Export](#dev-restore-db-from-export)
-  * [Build & Load DB via ETL Process](#dev-full-etl-process)
-  * [Container Entry Shortcut](#dev-container-entry-shortcut)
 * [Versioning](#versioning)
 * [License](#license)
 
