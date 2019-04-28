@@ -14,8 +14,6 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    depends_on:
-    - cms-utilization-db
     volumes:
       - ./volumes/elastic:/usr/share/elasticsearch/data
     environment:
