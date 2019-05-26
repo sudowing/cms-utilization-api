@@ -4,14 +4,14 @@ export interface Provider {
     entity_type: string;
     provider_type: string;
     address_street_01: string;
-    address_street_02: string|null;
+    address_street_02: string | null;
     address_city: string;
     address_zip_code: string;
     address_state: string;
     address_country: string;
     address_latitude: string;
     address_longitude: string;
-};
+}
 
 export interface ProviderIndividual {
     npi: number;
@@ -20,12 +20,12 @@ export interface ProviderIndividual {
     name_middle: string;
     credentials: string;
     gender: string;
-};
+}
 
 export interface ProviderOrganization {
     npi: number;
     name: string;
-};
+}
 
 export interface ProviderPerformance {
     npi: number;
@@ -40,13 +40,13 @@ export interface ProviderPerformance {
     avg_mcare_pay_amt: number;
     avg_mcare_standardized_amt: number;
     prisma_id: number;
-};
+}
 
 export interface Service {
     hcpcs_code: string;
     hcpcs_description: string;
     hcpcs_drug_indicator: string;
-};
+}
 
 export interface ServicePerformance {
     hcpcs_code: string;
@@ -102,7 +102,7 @@ export interface ServicePerformance {
     var_avg_mcare_submitted_charge_pay_amt: number;
     rank_var_avg_mcare_submitted_charge_pay_amt: number;
     prisma_id: number;
-};
+}
 
 export interface ServiceProviderPerformance {
     hcpcs_code: string;
@@ -131,8 +131,7 @@ export interface ServiceProviderPerformance {
     var_avg_mcare_submitted_charge_pay_amt: number;
     rank_var_avg_mcare_submitted_charge_pay_amt: number;
     prisma_id: number;
-};
-
+}
 
 export interface ServiceProviderPerformanceSummary {
     npi: number;
@@ -153,17 +152,16 @@ export interface ServiceProviderPerformanceSummary {
     rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi: number;
     summary_type: number;
     prisma_id: number;
-};
-
+}
 
 export interface ServiceProviderPerformanceSummaryType {
     id: number;
     slug: string;
     description: string;
     group_membership: boolean;
-};
+}
 
 export interface ServiceProviderTerms {
     npi?: number;
     hcpcs_code?: string;
-};
+}

@@ -20,8 +20,8 @@ const App = new Koa();
 App.use(cors());
 
 App.use(bodyParser())
-  .use(appRouter.routes())
-  .use(appRouter.allowedMethods())
+    .use(appRouter.routes())
+    .use(appRouter.allowedMethods());
 
 App.use(compress());
 
@@ -30,6 +30,6 @@ const server = new ApolloServer({ schema, context, debug });
 server.applyMiddleware({ app: App, path: `${urlRoot}/` });
 
 App.listen({ port }, () => {
-  logger.info("App Started.", { port });
-  logger.info(`Server ready at http://localhost:${port}${server.graphqlPath}`);
+    logger.info("App Started.", { port });
+    logger.info(`Server ready at http://localhost:${port}${server.graphqlPath}`);
 });

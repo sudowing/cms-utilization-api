@@ -7,8 +7,11 @@ const defaultPaginationOptions: any = {
 };
 
 export const genPaginationOrder = (paginationOptions: any) => {
-    const { page, limit, order, ...more } = Object.assign({},
-      defaultPaginationOptions, paginationOptions);
+    const { page, limit, order, ...more } = Object.assign(
+        {},
+        defaultPaginationOptions,
+        paginationOptions,
+    );
     // TODO: stop relying on offset
     // https://use-the-index-luke.com/no-offset
     const newPage = page < 1 ? 1 : page;
@@ -17,9 +20,9 @@ export const genPaginationOrder = (paginationOptions: any) => {
 
     const offset = newLimit * (newPage - 1);
     return {
-      page: newPage,
-      limit: newLimit,
-      order,
-      offset,
+        page: newPage,
+        limit: newLimit,
+        order,
+        offset,
     };
 };
