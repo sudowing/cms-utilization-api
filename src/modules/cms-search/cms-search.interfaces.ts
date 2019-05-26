@@ -1,7 +1,7 @@
 export interface SearchOptions {
     must?: any[];
     filter?: any;
-};
+}
 
 export interface GeoOptions {
     location?: ProviderPerformanceLocation;
@@ -9,17 +9,17 @@ export interface GeoOptions {
     distanceValue?: number;
     top_left?: ProviderPerformanceLocation;
     bottom_right?: ProviderPerformanceLocation;
-};
+}
 
 export interface ServiceOptions {
     hcpcsCodes: string[];
     allServices: boolean;
-};
+}
 
 export interface ServiceSuggestion {
     hcpcs_code: string;
     hcpcs_description: string;
-};
+}
 
 export interface ProviderSuggestion {
     npi: number;
@@ -29,7 +29,7 @@ export interface ProviderSuggestion {
     gender: string;
     name_first: string;
     name_last: string;
-};
+}
 
 export interface ProviderPerformanceDetail {
     npi: number;
@@ -46,7 +46,7 @@ export interface ProviderPerformanceDetail {
     mcare_participation_indicator: boolean;
     place_of_service: string;
     var_avg_mcare_submitted_charge_pay_amt: number;
-};
+}
 
 export interface ProviderPerformanceLocation {
     lat: string;
@@ -58,7 +58,7 @@ export interface ProviderPerformanceRecord {
     entity_type: string;
     location: ProviderPerformanceLocation;
     performances: ProviderPerformanceDetail[];
-};
+}
 
 export interface ServiceStats {
     hcpcs_code: string;
@@ -72,4 +72,4 @@ export interface ServiceStats {
     est_ttl_mcare_pay_amt: number;
     est_ttl_mcare_allowed_amt: number;
     est_ttl_mcare_standardized_amt: number;
-};
+}
