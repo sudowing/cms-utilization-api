@@ -1,7 +1,7 @@
-import { GraphQLModule } from "@graphql-modules/core";
-import gql from "graphql-tag";
+import { GraphQLModule } from '@graphql-modules/core'
+import gql from 'graphql-tag'
 
-import { resolvers } from "./app.resolvers";
+import { resolvers } from './app.resolvers'
 
 const typeDefs = gql`
     type Query {
@@ -20,9 +20,9 @@ const typeDefs = gql`
         resource: String
         up: Boolean
     }
-`;
+`
 
 export const AppModule = new GraphQLModule({
     typeDefs,
     resolvers,
-});
+})
