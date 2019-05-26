@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-04-26T21:24:28.011Z",
+	"__export_date": "2019-05-26T03:47:08.771Z",
 	"__export_source": "insomnia.desktop.app:v6.3.2",
 	"resources": [
 		{
@@ -86,7 +86,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"query suggest($search: String!, $limit: Int=8){\\n  suggestProviders(\\n    search: $search,\\n    limit: $limit\\n  ){\\n    npi\\n    entity_type\\n    address_city\\n    address_state\\n    gender\\n    name_first\\n    name_last\\n  }\\n  \\n}\",\"variables\":{\"search\":\"hayden\",\"limit\":3},\"operationName\":\"suggest\"}"
+				"text": "{\"query\":\"query suggest($search: String!, $limit: Int=8){\\n  suggestProviders(\\n    search: $search,\\n    limit: $limit\\n  ){\\n    npi\\n    entity_type\\n    address_city\\n    address_state\\n    gender\\n    name_first\\n    name_last\\n  }\\n  \\n}\",\"variables\":{\"search\":\"james\",\"limit\":15},\"operationName\":\"suggest\"}"
 			},
 			"created": 1556161300134,
 			"description": "",
@@ -100,7 +100,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556160877097,
 			"method": "POST",
-			"modified": 1556313783609,
+			"modified": 1558406690088,
 			"name": "suggest providers",
 			"parameters": [],
 			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
@@ -118,7 +118,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"query services($search: String!, $limit: Int=8){\\n  autocompleteServices(\\n    search: $search,\\n    limit: $limit\\n  ){\\n    hcpcs_code\\n    hcpcs_description\\n  }\\n}\",\"variables\":{\"search\":\"skin\",\"limit\":3},\"operationName\":\"services\"}"
+				"text": "{\"query\":\"query services($search: String!, $limit: Int=8){\\n  autocompleteServices(\\n    search: $search,\\n    limit: $limit\\n  ){\\n    hcpcs_code\\n    hcpcs_description\\n  }\\n}\",\"variables\":{\"search\":\"skin\",\"limit\":15},\"operationName\":\"services\"}"
 			},
 			"created": 1556161592940,
 			"description": "",
@@ -132,7 +132,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556160877047,
 			"method": "POST",
-			"modified": 1556162200487,
+			"modified": 1558406659127,
 			"name": "autocomplete services",
 			"parameters": [],
 			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
@@ -150,7 +150,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoProviders(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    npi\\n    entity_type\\n    location{\\n      lat\\n      lon\\n    }\\n    performances{\\n      npi\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n    }\\n  }  \\n}\",\"variables\":{\"geo\":{\"location\":{\"lat\":39.8707347,\"lon\":-74.8982277},\"distanceUnit\":\"kilometers\",\"distanceValue\":30},\"service\":{\"hcpcsCodes\":[\"99214\",\"66821\"],\"allServices\":false},\"limit\":1000,\"entity_type\":\"I\"},\"operationName\":\"suggest\"}"
+				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoProviders(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    npi\\n    entity_type\\n    location{\\n      lat\\n      lon\\n    }\\n    performances{\\n      npi\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n    }\\n  }  \\n}\",\"variables\":{\"geo\":{\"location\":{\"lat\":39.8707347,\"lon\":-74.8982277},\"distanceUnit\":\"kilometers\",\"distanceValue\":30},\"service\":{\"hcpcsCodes\":[\"G0008\"],\"allServices\":false},\"limit\":30,\"entity_type\":\"I\"},\"operationName\":\"suggest\"}"
 			},
 			"created": 1556161593849,
 			"description": "",
@@ -164,7 +164,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556160877022,
 			"method": "POST",
-			"modified": 1556163355877,
+			"modified": 1558839992488,
 			"name": "geoSearch Providers (distance)",
 			"parameters": [],
 			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
@@ -182,7 +182,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoProviders(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    npi\\n    entity_type\\n    location{\\n      lat\\n      lon\\n    }\\n    performances{\\n      npi\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n    }\\n  }  \\n}\",\"variables\":{\"geo\":{\"top_left\":{\"lon\":-75.071125,\"lat\":39.971463},\"bottom_right\":{\"lon\":-75.206823,\"lat\":39.918097}},\"service\":{\"hcpcsCodes\":[\"A0429\",\"A0427\"],\"allServices\":false},\"limit\":1000,\"entity_type\":\"O\"}}"
+				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoProviders(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    npi\\n    entity_type\\n    location{\\n      lat\\n      lon\\n    }\\n    performances{\\n      npi\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n    }\\n  }  \\n}\",\"variables\":{\"geo\":{\"top_left\":{\"lon\":-75.071125,\"lat\":39.971463},\"bottom_right\":{\"lon\":-75.206823,\"lat\":39.918097}},\"service\":{\"hcpcsCodes\":[\"A0429\",\"A0427\"],\"allServices\":false},\"limit\":1000}}"
 			},
 			"created": 1556163145526,
 			"description": "",
@@ -196,8 +196,72 @@
 			"isPrivate": false,
 			"metaSortKey": -1556160877009.5,
 			"method": "POST",
-			"modified": 1556313611196,
+			"modified": 1558842324399,
 			"name": "geoSearch Providers (bounding-box)",
+			"parameters": [],
+			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ HOST  }}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6325623c86e3410da1cf65a06989e8c9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/graphql",
+				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoServiceStats(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    hcpcs_code\\n    provider_count\\n    n_of_svcs\\n    avg_submitted_charge_amt\\n    avg_mcare_pay_amt\\n    avg_mcare_allowed_amt\\n    avg_mcare_standardized_amt\\n    est_ttl_submitted_charge_amt\\n    est_ttl_mcare_pay_amt\\n    est_ttl_mcare_allowed_amt\\n    est_ttl_mcare_standardized_amt\\n  }  \\n}\",\"variables\":{\"geo\":{\"location\":{\"lat\":39.8707347,\"lon\":-74.8982277},\"distanceUnit\":\"kilometers\",\"distanceValue\":30},\"service\":{\"hcpcsCodes\":[\"G0008\",\"74174\",\"97150\",\"64447\",\"90791\",\"90837\",\"90785\"],\"allServices\":false},\"limit\":30,\"entity_type\":\"I\"},\"operationName\":\"suggest\"}"
+			},
+			"created": 1558831404090,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_72166bc13103456891ee3ea2db75a4b8",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1556160876959.5,
+			"method": "POST",
+			"modified": 1558842404978,
+			"name": "geoSearch ServiceStats (distance)",
+			"parameters": [],
+			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ HOST  }}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8194c169437148f68a0212188a29b27e",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/graphql",
+				"text": "{\"query\":\"query suggest(\\n  $geo: GeoOptions!\\n  $service: ServiceOptions = null\\n\\t$limit: Int = 10000\\n\\t$entity_type: String = null\\n  \\n){\\n  geoSearch1: searchGeoServiceStats(\\n    geo: $geo,\\n    service: $service\\n    limit: $limit,\\n    entity_type: $entity_type\\n  ){\\n    hcpcs_code\\n    provider_count\\n    n_of_svcs\\n    avg_submitted_charge_amt\\n    avg_mcare_pay_amt\\n    avg_mcare_allowed_amt\\n    avg_mcare_standardized_amt\\n    est_ttl_submitted_charge_amt\\n    est_ttl_mcare_pay_amt\\n    est_ttl_mcare_allowed_amt\\n    est_ttl_mcare_standardized_amt\\n  }  \\n}\",\"variables\":{\"geo\":{\"top_left\":{\"lon\":-75.071125,\"lat\":39.971463},\"bottom_right\":{\"lon\":-75.206823,\"lat\":39.918097}},\"service\":{\"hcpcsCodes\":[\"A0429\",\"A0427\"],\"allServices\":false},\"limit\":1000}}"
+			},
+			"created": 1558842327213,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_72166bc13103456891ee3ea2db75a4b8",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1556160876909.5,
+			"method": "POST",
+			"modified": 1558842410497,
+			"name": "geoSearch ServiceStats (bounding-box)",
 			"parameters": [],
 			"parentId": "fld_cde17868afcc44d385ab0add92d49f02",
 			"settingDisableRenderRequestBody": false,
@@ -239,7 +303,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522316.1875,
 			"method": "POST",
-			"modified": 1556245899114,
+			"modified": 1558272757878,
 			"name": "providers (individual)",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -257,7 +321,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"\\nquery providerProfiles(\\n  $npis: [Float!]!\\n  $order: [String!] = null,\\n  $limit: Float=null\\n  $page: Float=null\\n){\\n  provider(input:{\\n    npis: $npis\\n  }){\\n    npi\\n    entity_type\\n    provider_type\\n    address_street_01\\n    address_street_02\\n    address_city\\n    address_zip_code\\n    address_state\\n    address_country\\n    address_latitude\\n    address_longitude\\n    detail{\\n      npi\\n      name_last\\n      name_first\\n      name_middle\\n      credentials\\n      gender\\n      name\\n    }\\n\\n    performanceSummaries{\\n      npi\\n      entity_type\\n      ttl_hcpcs_code\\n      ttl_n_of_svcs\\n      est_ttl_submitted_charge_amt\\n      est_ttl_mcare_pay_amt\\n      var_est_ttl_mcare_submitted_charge_pay_amt\\n      est_ttl_mcare_pay_amt_by_ttl_hcpcs_code\\n      est_ttl_mcare_pay_amt_by_ttl_n_of_svcs\\n      rank_ttl_hcpcs_code\\n      rank_ttl_n_of_svcs\\n      rank_est_ttl_submitted_charge_amt\\n      rank_est_ttl_mcare_pay_amt\\n      rank_var_est_ttl_mcare_submitted_charge_pay_amoun\\n      rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code\\n      rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi\\n      summary_type\\n    }\\n\\n    countProviderPerformance{\\n      count\\n    }\\n    providerPerformance(\\n      pagination: {\\n        limit: $limit,\\n        page: $page,\\n        order: $order\\n      }\\n    ){\\n      npi\\n      mcare_participation_indicator\\n      place_of_service\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_mcare_beneficiaries\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      avg_mcare_allowed_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_pay_amt\\n      avg_mcare_standardized_amt\\n      provider{\\n        npi\\n        entity_type\\n        provider_type\\n        address_street_01\\n        address_street_02\\n        address_city\\n        address_zip_code\\n        address_state\\n        address_country\\n        address_latitude\\n        address_longitude\\n      }\\n\\n    }\\n\\n\\n    countServiceProviderPerformance{\\n      count\\n    }\\n    serviceProviderPerformances(\\n      pagination: {\\n        limit: $limit,\\n        page: $page,\\n        order: $order\\n      }\\n    ){\\n      hcpcs_code\\n      npi\\n      entity_type\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      rank_n_of_svcs\\n      rank_n_of_distinct_mcare_beneficiary_per_day_svcs\\n      rank_n_of_mcare_beneficiaries\\n      rank_avg_mcare_standardized_amt\\n      rank_avg_mcare_allowed_amt\\n      rank_avg_submitted_charge_amt\\n      rank_avg_mcare_pay_amt\\n      rank_est_ttl_mcare_pay_amt\\n      rank_est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n      rank_var_avg_mcare_submitted_charge_pay_amt\\n      provider{\\n        npi\\n        entity_type\\n        provider_type\\n        address_street_01\\n        address_street_02\\n        address_city\\n        address_zip_code\\n        address_state\\n        address_country\\n        address_latitude\\n        address_longitude\\n      }\\n    }\\n        \\n  }\\n\\n  \\n\\n}\",\"variables\":{\"npis\":[1003082041],\"order\":[\"n_of_svcs desc\",\"avg_mcare_standardized_amt desc\"],\"page\":1,\"limit\":4}}"
+				"text": "{\"query\":\"\\nquery providerProfiles(\\n  $npis: [Float!]!\\n  $order: [String!] = null,\\n  $limit: Float=null\\n  $page: Float=null\\n){\\n  provider(input:{\\n    npis: $npis\\n  }){\\n    npi\\n    entity_type\\n    provider_type\\n    address_street_01\\n    address_street_02\\n    address_city\\n    address_zip_code\\n    address_state\\n    address_country\\n    address_latitude\\n    address_longitude\\n    detail{\\n      npi\\n      name_last\\n      name_first\\n      name_middle\\n      credentials\\n      gender\\n      name\\n    }\\n\\n    performanceSummaries{\\n      npi\\n      entity_type\\n      ttl_hcpcs_code\\n      ttl_n_of_svcs\\n      est_ttl_submitted_charge_amt\\n      est_ttl_mcare_pay_amt\\n      var_est_ttl_mcare_submitted_charge_pay_amt\\n      est_ttl_mcare_pay_amt_by_ttl_hcpcs_code\\n      est_ttl_mcare_pay_amt_by_ttl_n_of_svcs\\n      rank_ttl_hcpcs_code\\n      rank_ttl_n_of_svcs\\n      rank_est_ttl_submitted_charge_amt\\n      rank_est_ttl_mcare_pay_amt\\n      rank_var_est_ttl_mcare_submitted_charge_pay_amoun\\n      rank_est_ttl_mcare_pay_amt_by_ttl_hcpcs_code\\n      rank_est_ttl_mcare_pay_amt_by_ttl_n_of_servi\\n      summary_type\\n    }\\n\\n    countProviderPerformance{\\n      count\\n    }\\n    providerPerformance(\\n      pagination: {\\n        limit: $limit,\\n        page: $page,\\n        order: $order\\n      }\\n    ){\\n      npi\\n      mcare_participation_indicator\\n      place_of_service\\n      hcpcs_code\\n      n_of_svcs\\n      n_of_mcare_beneficiaries\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      avg_mcare_allowed_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_pay_amt\\n      avg_mcare_standardized_amt\\n      provider{\\n        npi\\n        entity_type\\n        provider_type\\n        address_street_01\\n        address_street_02\\n        address_city\\n        address_zip_code\\n        address_state\\n        address_country\\n        address_latitude\\n        address_longitude\\n      }\\n\\n    }\\n\\n\\n    countServiceProviderPerformance{\\n      count\\n    }\\n    serviceProviderPerformances(\\n      pagination: {\\n        limit: $limit,\\n        page: $page,\\n        order: $order\\n      }\\n    ){\\n      hcpcs_code\\n      npi\\n      entity_type\\n      n_of_svcs\\n      n_of_distinct_mcare_beneficiary_per_day_svcs\\n      n_of_mcare_beneficiaries\\n      avg_mcare_pay_amt\\n      avg_submitted_charge_amt\\n      avg_mcare_allowed_amt\\n      avg_mcare_standardized_amt\\n      est_ttl_mcare_pay_amt\\n      est_ttl_submitted_charge_amt\\n      rank_n_of_svcs\\n      rank_n_of_distinct_mcare_beneficiary_per_day_svcs\\n      rank_n_of_mcare_beneficiaries\\n      rank_avg_mcare_standardized_amt\\n      rank_avg_mcare_allowed_amt\\n      rank_avg_submitted_charge_amt\\n      rank_avg_mcare_pay_amt\\n      rank_est_ttl_mcare_pay_amt\\n      rank_est_ttl_submitted_charge_amt\\n      mcare_participation_indicator\\n      place_of_service\\n      var_avg_mcare_submitted_charge_pay_amt\\n      rank_var_avg_mcare_submitted_charge_pay_amt\\n      provider{\\n        npi\\n        entity_type\\n        provider_type\\n        address_street_01\\n        address_street_02\\n        address_city\\n        address_zip_code\\n        address_state\\n        address_country\\n        address_latitude\\n        address_longitude\\n      }\\n    }\\n        \\n  }\\n\\n  \\n\\n}\",\"variables\":{\"npis\":[1285755538],\"order\":[\"n_of_svcs desc\",\"avg_mcare_standardized_amt desc\"],\"page\":1,\"limit\":50},\"operationName\":\"providerProfiles\"}"
 			},
 			"created": 1556161567480,
 			"description": "",
@@ -271,7 +335,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522366.1875,
 			"method": "POST",
-			"modified": 1556313778903,
+			"modified": 1558830220364,
 			"name": "providers (masterfile)",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -303,7 +367,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522309.9375,
 			"method": "POST",
-			"modified": 1556245909353,
+			"modified": 1558272751260,
 			"name": "providers (organizations)",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -335,7 +399,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522307.5938,
 			"method": "POST",
-			"modified": 1556311145668,
+			"modified": 1558272954851,
 			"name": "provider's service performance summary types",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -367,7 +431,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522308.375,
 			"method": "POST",
-			"modified": 1556311700801,
+			"modified": 1558272947644,
 			"name": "provider's service performance summary",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -399,7 +463,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522305.6406,
 			"method": "POST",
-			"modified": 1556311142952,
+			"modified": 1558403532831,
 			"name": "services (basic & performance summary)",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -431,7 +495,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522309.1562,
 			"method": "POST",
-			"modified": 1556244053533,
+			"modified": 1558403521012,
 			"name": "providers performance summaries",
 			"parameters": [],
 			"parentId": "fld_cbb7d5bf7e8a492eb88fc08c1a9a2990",
@@ -463,7 +527,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556160877197,
 			"method": "POST",
-			"modified": 1556313828381,
+			"modified": 1558275124149,
 			"name": "npi registration",
 			"parameters": [],
 			"parentId": "fld_725348eebadc4f0697d6857c37cfc881",
@@ -495,7 +559,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522277.3203,
 			"method": "POST",
-			"modified": 1556244206098,
+			"modified": 1558402795287,
 			"name": "raw performance (by service || by provider)",
 			"parameters": [],
 			"parentId": "fld_f894f7c10b9f4e6c98e936b49a12d239",
@@ -513,7 +577,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/graphql",
-				"text": "{\"query\":\"query servicePerformance(\\n  $npi: Float\\n  $hcpcs_code: String = null\\n  $order: [String!] = null,\\n  $limit: Float=4\\n  $page: Float=2\\n){\\n  countServiceProviderPerformance(\\n    input:{\\n      npi: $npi\\n      hcpcs_code: $hcpcs_code\\n    }\\n  ){\\n    count\\n  }\\n  \\n  serviceProviderPerformance(\\n    input:{\\n      npi: $npi\\n      hcpcs_code: $hcpcs_code\\n    },\\n    pagination: {\\n      limit: $limit,\\n      page: $page,\\n      order: $order\\n    }\\n  ){\\n    hcpcs_code\\n    npi\\n    entity_type\\n    n_of_svcs\\n    n_of_distinct_mcare_beneficiary_per_day_svcs\\n    n_of_mcare_beneficiaries\\n    avg_mcare_pay_amt\\n    avg_submitted_charge_amt\\n    avg_mcare_allowed_amt\\n    avg_mcare_standardized_amt\\n    est_ttl_mcare_pay_amt\\n    est_ttl_submitted_charge_amt\\n    rank_n_of_svcs\\n    rank_n_of_distinct_mcare_beneficiary_per_day_svcs\\n    rank_n_of_mcare_beneficiaries\\n    rank_avg_mcare_standardized_amt\\n    rank_avg_mcare_allowed_amt\\n    rank_avg_submitted_charge_amt\\n    rank_avg_mcare_pay_amt\\n    rank_est_ttl_mcare_pay_amt\\n    rank_est_ttl_submitted_charge_amt\\n    mcare_participation_indicator\\n    place_of_service\\n    var_avg_mcare_submitted_charge_pay_amt\\n    rank_var_avg_mcare_submitted_charge_pay_amt\\n    provider{\\n      npi\\n      entity_type\\n      provider_type\\n      address_street_01\\n      address_street_02\\n      address_city\\n      address_zip_code\\n      address_state\\n      address_country\\n      address_latitude\\n      address_longitude\\n    }\\n    service{\\n      hcpcs_code\\n      hcpcs_description\\n      hcpcs_drug_indicator\\n    }\\n\\n  \\n  }  \\n\\n\\n}\\n\",\"variables\":{\"npi\":1003010208,\"hcpcs_code\":\"G0008\",\"order\":[\"n_of_svcs desc\",\"avg_mcare_standardized_amt desc\"],\"page\":1,\"limit\":4}}"
+				"text": "{\"query\":\"query servicePerformance(\\n  $npi: Float\\n  $hcpcs_code: String = null\\n  $order: [String!] = null,\\n  $limit: Float=4\\n  $page: Float=2\\n){\\n  countServiceProviderPerformance(\\n    input:{\\n      npi: $npi\\n      hcpcs_code: $hcpcs_code\\n    }\\n  ){\\n    count\\n  }\\n  \\n  serviceProviderPerformance(\\n    input:{\\n      npi: $npi\\n      hcpcs_code: $hcpcs_code\\n    },\\n    pagination: {\\n      limit: $limit,\\n      page: $page,\\n      order: $order\\n    }\\n  ){\\n    # hcpcs_code\\n    service_count: n_of_svcs\\n    money_earned: est_ttl_mcare_pay_amt  \\n  }  \\n\\n\\n}\\n\",\"variables\":{\"npi\":1285755538,\"order\":[\"n_of_svcs desc\",\"avg_mcare_standardized_amt desc\"],\"page\":1,\"limit\":20}}"
 			},
 			"created": 1556166338548,
 			"description": "",
@@ -527,7 +591,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1556161522227.3203,
 			"method": "POST",
-			"modified": 1556244720337,
+			"modified": 1558408075471,
 			"name": "extended performance (by service || by provider)",
 			"parameters": [],
 			"parentId": "fld_f894f7c10b9f4e6c98e936b49a12d239",
