@@ -1,1 +1,1 @@
-export { router } from './app.controllers'
+export { router } from './app.controllers';

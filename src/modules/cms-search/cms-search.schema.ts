@@ -1,8 +1,8 @@
-import { GraphQLModule } from '@graphql-modules/core'
-import gql from 'graphql-tag'
+import { GraphQLModule } from '@graphql-modules/core';
+import gql from 'graphql-tag';
 
-import { apiModule, dbModule } from '../index'
-import { resolvers } from './cms-search.resolvers'
+import { apiModule, dbModule } from '../index';
+import { resolvers } from './cms-search.resolvers';
 
 const typeDefs = gql`
     type Query {
@@ -97,10 +97,10 @@ const typeDefs = gql`
         est_ttl_mcare_allowed_amt: Float!
         est_ttl_mcare_standardized_amt: Float!
     }
-`
+`;
 
 export const AppModule: GraphQLModule = new GraphQLModule({
     typeDefs,
     resolvers,
     // imports: [dbModule, apiModule],
-})
+});

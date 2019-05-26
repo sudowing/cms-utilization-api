@@ -1,4 +1,4 @@
-import * as winston from 'winston'
+import * as winston from 'winston';
 
 export const logger = winston.createLogger({
     defaultMeta: { service: 'user-service' },
@@ -12,7 +12,7 @@ export const logger = winston.createLogger({
         new winston.transports.File({ filename: 'error.log', level: 'error' }),
         new winston.transports.File({ filename: 'combined.log' }),
     ],
-})
+});
 
 //
 // If we're not in production then log to the `console` with the format:
@@ -22,6 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
     logger.add(
         new winston.transports.Console({
             format: winston.format.simple(),
-        })
-    )
+        }),
+    );
 }

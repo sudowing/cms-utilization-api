@@ -4,7 +4,7 @@ export const resolvers = {
             return {
                 date: new Date().toISOString(),
                 message: 'Ok.',
-            }
+            };
         },
         healthcheck(obj: any, args: any, context: any, info: any) {
             return {
@@ -15,31 +15,31 @@ export const resolvers = {
                     { resource: 'elasticsearch', up: true },
                     { resource: 'npi-api', up: true },
                 ],
-            }
+            };
         },
     },
     AppPing: {
         date(obj: any, args: any, context: any, info: any) {
-            return obj.date
+            return obj.date;
         },
         message(obj: any, args: any, context: any, info: any) {
-            return obj.message
+            return obj.message;
         },
     },
     AppHealthCheck: {
         date(obj: any, args: any, context: any, info: any) {
-            return obj.date
+            return obj.date;
         },
         resources(obj: any, args: any, context: any, info: any) {
-            return obj.resources
+            return obj.resources;
         },
     },
     AppResourceHealthReport: {
         resource(obj: any, args: any, context: any, info: any) {
-            return obj.resource
+            return obj.resource;
         },
         up(obj: any, args: any, context: any, info: any) {
-            return obj.up
+            return obj.up;
         },
     },
-}
+};
