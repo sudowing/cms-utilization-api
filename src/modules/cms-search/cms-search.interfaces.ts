@@ -31,7 +31,7 @@ export interface ProviderSuggestion {
     name_last: string;
 };
 
-interface ProviderPerformanceDetail {
+export interface ProviderPerformanceDetail {
     npi: number;
     hcpcs_code: string;
     n_of_svcs: number;
@@ -58,4 +58,18 @@ export interface ProviderPerformanceRecord {
     entity_type: string;
     location: ProviderPerformanceLocation;
     performances: ProviderPerformanceDetail[];
+};
+
+export interface ServiceStats {
+    hcpcs_code: string;
+    provider_count: number;
+    n_of_svcs: number;
+    avg_submitted_charge_amt: number;
+    avg_mcare_pay_amt: number;
+    avg_mcare_allowed_amt: number;
+    avg_mcare_standardized_amt: number;
+    est_ttl_submitted_charge_amt: number;
+    est_ttl_mcare_pay_amt: number;
+    est_ttl_mcare_allowed_amt: number;
+    est_ttl_mcare_standardized_amt: number;
 };

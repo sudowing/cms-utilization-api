@@ -2,7 +2,7 @@ import { elasticsearch as es } from "../../network-sources";
 import * as ts from "./cms-search.interfaces";
 import * as map from "./cms-search.mappers";
 
-const formatPerformance = (performance: any) => {
+const formatPerformance = (performance: any): ts.ProviderPerformanceDetail => {
     const {
         rank_n_of_svcs,
         rank_n_of_distinct_mcare_beneficiary_per_day_svcs,
@@ -17,6 +17,22 @@ const formatPerformance = (performance: any) => {
         ...remaining
     } = performance;
     return map.providerPerformanceRecord(remaining);
+};
+
+const initServiceStats = (service: string): ts.ServiceStats => {
+    return {
+        hcpcs_code: service,
+        provider_count: 0,
+        n_of_svcs: 0,
+        avg_submitted_charge_amt: 0,
+        avg_mcare_pay_amt: 0,
+        avg_mcare_allowed_amt: 0,
+        avg_mcare_standardized_amt: 0,
+        est_ttl_submitted_charge_amt: 0,
+        est_ttl_mcare_pay_amt: 0,
+        est_ttl_mcare_allowed_amt: 0,
+        est_ttl_mcare_standardized_amt: 0,
+    };
 };
 
 const genGeoProviderQuery = (
@@ -84,25 +100,114 @@ export const searchGeoProviders = async (
         body: geoProviderQuery,
     });
 
-    const records = searchResults.hits.hits.map((record: any) => {
+    const records: ts.ProviderPerformanceRecord[] = searchResults.hits.hits.map((record: any) => {
         const source = record._source;
-        source.performances = source.performances.reduce((accum: any[], curr: any) => {
-            // if they search using hcpcs, only return relevant performance records
-            if (hcpcsOptions && hcpcsOptions.hcpcsCodes) {
-                if (hcpcsOptions.hcpcsCodes.includes(curr.hcpcs_code)) {
+        source.performances = source.performances
+            .reduce((accum: ts.ProviderPerformanceDetail[], curr: any)
+            : ts.ProviderPerformanceDetail[] => {
+                // if they search using hcpcs, only return relevant performance records
+                if (hcpcsOptions && hcpcsOptions.hcpcsCodes) {
+                    if (hcpcsOptions.hcpcsCodes.includes(curr.hcpcs_code)) {
+                        accum.push(formatPerformance(curr));
+                    }
+                // else send it all
+                } else {
                     accum.push(formatPerformance(curr));
                 }
-            // else send it all
-            } else {
-                accum.push(formatPerformance(curr));
-            }
-            return accum;
-        }, []);
+                return accum;
+            }, []);
 
         return source;
     });
 
     return records;
+};
+
+export const searchGeoServiceStats = async (
+    geoOptions: ts.GeoOptions,
+    hcpcsOptions: ts.ServiceOptions,
+    entityType: string = "",
+    limit: number = 10000,
+    offset: number = 0,
+): Promise<ts.ServiceStats[]> => {
+
+    const geoProviderQuery = {
+        query: {
+            bool : genGeoProviderQuery(geoOptions, hcpcsOptions, entityType),
+        },
+        from: offset,
+        size: limit,
+    };
+
+    const searchResults = await es.search({
+        index: "provider-performance",
+        _source: ["performances"],
+        body: geoProviderQuery,
+    });
+
+    const providerPerformanceRecordsIndexDocs: any[] = searchResults.hits.hits;
+    // double reduce. reduce arr performances within arr of providers --> result 1 array of performances
+    const providerPerformanceRecords = providerPerformanceRecordsIndexDocs
+        .reduce((outerAccum: ts.ProviderPerformanceDetail[], curr: any)
+            : ts.ProviderPerformanceDetail[] => {
+                const providerPerformances: ts.ProviderPerformanceRecord[] = curr._source.performances;
+                return providerPerformances.reduce((innerAccum: ts.ProviderPerformanceDetail[], item: any)
+                    : ts.ProviderPerformanceDetail[] => {
+                        // if they search using hcpcs, only return relevant performance records
+                        if (hcpcsOptions && hcpcsOptions.hcpcsCodes) {
+                            if (hcpcsOptions.hcpcsCodes.includes(item.hcpcs_code)) {
+                                innerAccum.push(formatPerformance(item));
+                            }
+                        // else send it all
+                        } else {
+                            innerAccum.push(formatPerformance(item));
+                        }
+                        return innerAccum;
+                    } , outerAccum);
+            }, []);
+    const services = new Set(providerPerformanceRecords.map((item: ts.ProviderPerformanceDetail) => item.hcpcs_code));
+    const aggregateServiceStats: any = {};
+    for (const service of Array.from(services)) {
+        const code: string = service.toString();
+        aggregateServiceStats[code] = initServiceStats(code);
+    }
+
+    for (const providerPerformance of providerPerformanceRecords) {
+        const { hcpcs_code: code } = providerPerformance;
+        aggregateServiceStats[code].provider_count++;
+        aggregateServiceStats[code].n_of_svcs =
+            aggregateServiceStats[code].n_of_svcs + providerPerformance.n_of_svcs;
+
+        aggregateServiceStats[code].est_ttl_submitted_charge_amt =
+            aggregateServiceStats[code].est_ttl_submitted_charge_amt + providerPerformance.est_ttl_submitted_charge_amt;
+        aggregateServiceStats[code].est_ttl_mcare_pay_amt =
+            aggregateServiceStats[code].est_ttl_mcare_pay_amt + providerPerformance.est_ttl_mcare_pay_amt;
+        aggregateServiceStats[code].est_ttl_mcare_allowed_amt =
+            aggregateServiceStats[code].est_ttl_mcare_allowed_amt + (
+            providerPerformance.avg_mcare_allowed_amt * providerPerformance.n_of_svcs
+        );
+        aggregateServiceStats[code].est_ttl_mcare_standardized_amt =
+            aggregateServiceStats[code].est_ttl_mcare_standardized_amt + (
+            providerPerformance.avg_mcare_standardized_amt * providerPerformance.n_of_svcs
+        );
+    }
+
+    const serviceStats = Object.keys(aggregateServiceStats).map((hcpcs_code: string) => {
+        const rawServiceStats = aggregateServiceStats[hcpcs_code];
+        const { provider_count, n_of_svcs, ...nServiceStats } = rawServiceStats;
+
+        nServiceStats.avg_submitted_charge_amt = nServiceStats.est_ttl_submitted_charge_amt / n_of_svcs;
+        nServiceStats.avg_mcare_pay_amt = nServiceStats.est_ttl_mcare_pay_amt / n_of_svcs;
+        nServiceStats.avg_mcare_allowed_amt = nServiceStats.est_ttl_mcare_allowed_amt / n_of_svcs;
+        nServiceStats.avg_mcare_standardized_amt = nServiceStats.est_ttl_mcare_standardized_amt / n_of_svcs;
+
+        for (const key of Object.keys(nServiceStats)) {
+            nServiceStats[key] = parseFloat(nServiceStats[key]).toFixed(2);
+        }
+
+        return { hcpcs_code, provider_count, n_of_svcs, ...nServiceStats };
+    });
+    return serviceStats;
 };
 
 export const autocompleteServices = async (
