@@ -31,7 +31,7 @@ export interface ProviderSuggestion {
     name_last: string;
 };
 
-interface ProviderPerformanceDetail {
+export interface ProviderPerformanceDetail {
     npi: number;
     hcpcs_code: string;
     n_of_svcs: number;
