@@ -194,7 +194,7 @@ export const searchGeoServiceStats = async (
 
     const serviceStats = Object.keys(aggregateServiceStats).map((hcpcs_code: string) => {
         const rawServiceStats = aggregateServiceStats[hcpcs_code];
-        const { provider_count, n_of_svcs, ...nServiceStats } = rawServiceStats;
+        const { provider_count, n_of_svcs, hcpcs_code: dupCode, ...nServiceStats } = rawServiceStats;
 
         nServiceStats.avg_submitted_charge_amt = nServiceStats.est_ttl_submitted_charge_amt / n_of_svcs;
         nServiceStats.avg_mcare_pay_amt = nServiceStats.est_ttl_mcare_pay_amt / n_of_svcs;
