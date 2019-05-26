@@ -75,7 +75,7 @@ const genGeoProviderQuery = (
         hcpcsOptions.hcpcsCodes &&
         hcpcsOptions.hcpcsCodes.length
     ) {
-        const hcpcsSearch = hcpcsOptions.hcpcsCodes.map(item => ({
+        const hcpcsSearch = hcpcsOptions.hcpcsCodes.map((item) => ({
             match: { 'performances.hcpcs_code': item },
         }));
         const mustOrShould = hcpcsOptions.allServices ? 'must' : 'should';
