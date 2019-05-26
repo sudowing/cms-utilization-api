@@ -12,6 +12,12 @@ const typeDefs = gql`
       limit: Int
       entity_type: String
     ): [ProviderPerformanceRecord!]
+    searchGeoServiceStats(
+      geo: GeoOptions!
+      service: ServiceOptions
+      limit: Int
+      entity_type: String
+    ): [ServiceStats!]
     autocompleteServices(
       search: String!,
       limit: Int
@@ -82,6 +88,22 @@ const typeDefs = gql`
       entity_type: String!
       location: ProviderPerformanceLocation!
       performances: [ProviderPerformanceDetail]
+  }
+
+
+  type ServiceStats {
+      hcpcs_code: String!
+      provider_count: Float!
+      n_of_svcs: Float!
+      avg_submitted_charge_amt: Float!
+      avg_mcare_pay_amt: Float!
+      avg_mcare_allowed_amt: Float!
+      avg_mcare_standardized_amt: Float!
+      est_ttl_submitted_charge_amt: Float!
+      est_ttl_mcare_pay_amt: Float!
+      est_ttl_mcare_allowed_amt: Float!
+      est_ttl_mcare_standardized_amt: Float!
+
   }
 
 `;
