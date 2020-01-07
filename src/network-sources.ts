@@ -22,7 +22,7 @@ const validateStatus = (status: number) => {
 };
 
 export const npiRegistry = axios.create({
-    baseURL: 'https://npiregistry.cms.hhs.gov/api/',
+    baseURL: 'https://npiregistry.cms.hhs.gov/api/?version=2.1',
     timeout: 1000,
     validateStatus,
 });
