@@ -1,6 +1,6 @@
 {
   "name": "cms-utilization-api",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "GraphQL API exposing healthcare costs and services.",
   "main": "index.js",
   "scripts": {
